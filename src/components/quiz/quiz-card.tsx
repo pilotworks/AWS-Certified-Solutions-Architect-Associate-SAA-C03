@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { PracticeQuestion } from '../../types';
-import { CheckCircle2, XCircle, HelpCircle, Bookmark, BookmarkCheck, Key } from 'lucide-react';
+import { IconCircleCheck, IconCircleX, IconHelpCircle, IconBookmark, IconBookmarkFilled, IconKey } from '@tabler/icons-react';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { MarkdownRenderer, parseInline } from '../markdown/markdown-renderer';
@@ -75,7 +75,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
         borderColor: 'var(--border-subtle)',
       }}
     >
-      {/* Header Info */}
+      {/* Header IconInfoCircle */}
       <div
         className="flex items-center justify-between gap-3 mb-4 pb-3 border-b"
         style={{ borderColor: 'var(--border-subtle)' }}
@@ -107,12 +107,12 @@ export const QuizCard: React.FC<QuizCardProps> = ({
             onClick={onToggleBookmark}
             className="hover:opacity-100 opacity-60 transition-opacity p-1 cursor-pointer"
             style={{ color: 'var(--text-accent)' }}
-            title={isBookmarked ? 'Remove Bookmark' : 'Bookmark Question'}
+            title={isBookmarked ? 'Remove IconBookmark' : 'IconBookmark Question'}
           >
             {isBookmarked ? (
-              <BookmarkCheck className="w-5 h-5" style={{ color: 'var(--text-accent)' }} />
+              <IconBookmarkFilled className="w-5 h-5" style={{ color: 'var(--text-accent)' }} />
             ) : (
-              <Bookmark className="w-5 h-5" />
+              <IconBookmark className="w-5 h-5" />
             )}
           </button>
         )}
@@ -130,7 +130,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
       {question.examKeywords.length > 0 && (
         <div className="flex items-center gap-1.5 flex-wrap mb-5">
           <span className="text-xs flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-            <Key className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Key Clues:
+            <IconKey className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> IconKey Clues:
           </span>
           {question.examKeywords.map((kw, idx) => (
             <span
@@ -211,10 +211,10 @@ export const QuizCard: React.FC<QuizCardProps> = ({
               </div>
 
               {isSubmitted && isTargetCorrect && (
-                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                <IconCircleCheck className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
               )}
               {isSubmitted && isSelected && !isTargetCorrect && (
-                <XCircle className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
+                <IconCircleX className="w-5 h-5 text-rose-500 shrink-0 mt-0.5" />
               )}
             </div>
           );
@@ -230,18 +230,18 @@ export const QuizCard: React.FC<QuizCardProps> = ({
             size="md"
             className="w-full md:w-auto"
           >
-            Check Answer
+            IconCheck Answer
           </Button>
         ) : (
           <div className="flex items-center gap-3 w-full justify-between flex-wrap">
             <div className="flex items-center gap-2">
               {isSelectionCorrect ? (
                 <Badge variant="emerald" size="md">
-                  <CheckCircle2 className="w-4 h-4" /> Correct Answer
+                  <IconCircleCheck className="w-4 h-4" /> Correct Answer
                 </Badge>
               ) : (
                 <Badge variant="rose" size="md">
-                  <XCircle className="w-4 h-4" /> Incorrect
+                  <IconCircleX className="w-4 h-4" /> Incorrect
                 </Badge>
               )}
             </div>
@@ -263,7 +263,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
           }}
         >
           <div className="flex items-center gap-2 font-bold mb-2.5 text-sm" style={{ color: 'var(--text-accent)' }}>
-            <HelpCircle className="w-4 h-4" /> Explanation:
+            <IconHelpCircle className="w-4 h-4" /> Explanation:
           </div>
           <div style={{ color: 'var(--text-primary)' }}>
             <MarkdownRenderer content={question.explanation} />

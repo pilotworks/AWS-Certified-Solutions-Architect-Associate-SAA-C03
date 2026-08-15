@@ -5,13 +5,13 @@ import { PageHead } from '../components/seo/page-head';
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import {
-  Award,
-  Clock,
-  Flag,
-  ChevronLeft,
-  ChevronRight,
-  RotateCcw,
-} from 'lucide-react';
+  IconAward,
+  IconClock,
+  IconFlag,
+  IconChevronLeft,
+  IconChevronRight,
+  IconRotate,
+} from '@tabler/icons-react';
 import confetti from 'canvas-confetti';
 
 interface ExamSimulatorPageProps {
@@ -176,7 +176,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
               border: '1px solid var(--accent-border)',
             }}
           >
-            <Award className="w-8 h-8" />
+            <IconAward className="w-8 h-8" />
           </div>
 
           <h1
@@ -268,7 +268,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
               color: timeLeft < 15 * 60 ? '#EF4444' : 'var(--text-accent)',
             }}
           >
-            <Clock className="w-4 h-4" />
+            <IconClock className="w-4 h-4" />
             {formatTimer(timeLeft)}
           </div>
 
@@ -369,7 +369,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
           </div>
 
           <div className="flex justify-center">
-            <Button onClick={startNewExam} size="md" icon={<RotateCcw className="w-4 h-4" />}>
+            <Button onClick={startNewExam} size="md" icon={<IconRotate className="w-4 h-4" />}>
               Retake Another Exam
             </Button>
           </div>
@@ -409,7 +409,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
                 color: flaggedIds.includes(currentQ.id) ? '#EF4444' : 'var(--text-secondary)',
               }}
             >
-              <Flag className="w-3.5 h-3.5" /> Flag for Review
+              <IconFlag className="w-3.5 h-3.5" /> IconFlag for Review
             </button>
           </div>
 
@@ -510,7 +510,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
               disabled={currentIndex === 0}
               onClick={() => setCurrentIndex((c) => c - 1)}
             >
-              <ChevronLeft className="w-4 h-4" /> Previous
+              <IconChevronLeft className="w-4 h-4" /> Previous
             </Button>
 
             <Button
@@ -519,7 +519,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
               disabled={currentIndex === questions.length - 1}
               onClick={() => setCurrentIndex((c) => c + 1)}
             >
-              Next <ChevronRight className="w-4 h-4" />
+              Next <IconChevronRight className="w-4 h-4" />
             </Button>
           </div>
         </div>

@@ -5,24 +5,24 @@ import { PatternType } from '../types';
 import { MermaidViewer } from '../components/architecture/mermaid-viewer';
 import { PageHead } from '../components/seo/page-head';
 import {
-  Workflow,
-  Search,
-  CheckCircle2,
-  Layers,
-  ShieldAlert,
-  Server,
-  Network,
-  Zap,
-  ArrowRight,
-} from 'lucide-react';
+  IconSitemap,
+  IconSearch,
+  IconCircleCheck,
+  IconStack2,
+  IconShieldExclamation,
+  IconServer,
+  IconNetwork,
+  IconBolt,
+  IconArrowRight,
+} from '@tabler/icons-react';
 
 const PATTERN_FILTERS: { type: PatternType | 'all'; label: string; icon: any }[] = [
-  { type: 'all', label: 'All Patterns', icon: Layers },
-  { type: 'HA_DR', label: 'High Availability & DR', icon: ShieldAlert },
-  { type: 'Serverless', label: 'Serverless Event-Driven', icon: Zap },
-  { type: 'Decoupled', label: 'Decoupled Fanout (SQS/SNS)', icon: Workflow },
-  { type: 'MultiTier', label: 'Multi-Tier Web & VPC', icon: Server },
-  { type: 'HybridNetwork', label: 'Hybrid & Transit Gateway', icon: Network },
+  { type: 'all', label: 'All Patterns', icon: IconStack2 },
+  { type: 'HA_DR', label: 'High Availability & DR', icon: IconShieldExclamation },
+  { type: 'Serverless', label: 'Serverless Event-Driven', icon: IconBolt },
+  { type: 'Decoupled', label: 'Decoupled Fanout (SQS/SNS)', icon: IconSitemap },
+  { type: 'MultiTier', label: 'Multi-Tier Web & VPC', icon: IconServer },
+  { type: 'HybridNetwork', label: 'Hybrid & Transit Gateway', icon: IconNetwork },
 ];
 
 export const ArchitecturePage: React.FC = () => {
@@ -103,7 +103,7 @@ export const ArchitecturePage: React.FC = () => {
               color: '#0284C7',
             }}
           >
-            <Workflow className="w-3.5 h-3.5" />
+            <IconSitemap className="w-3.5 h-3.5" />
             <span>Interactive Vector Architecture Engine</span>
           </div>
           <h1
@@ -118,7 +118,7 @@ export const ArchitecturePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Filter Toolbar with Query String Sync */}
+      {/* IconFilter Toolbar with Query String Sync */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Pattern Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full scrollbar-none">
@@ -146,9 +146,9 @@ export const ArchitecturePage: React.FC = () => {
           })}
         </div>
 
-        {/* Search Input */}
+        {/* IconSearch Input */}
         <div className="relative min-w-[260px]">
-          <Search
+          <IconSearch
             className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2"
             style={{ color: 'var(--text-muted)' }}
           />
@@ -156,7 +156,7 @@ export const ArchitecturePage: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="Search architecture patterns..."
+            placeholder="IconSearch architecture patterns..."
             className="w-full pl-9 pr-4 py-2 rounded-xl text-base md:text-xs transition-colors focus:outline-none"
             style={{
               backgroundColor: 'var(--bg-elevated)',
@@ -340,7 +340,7 @@ export const ArchitecturePage: React.FC = () => {
                 <MermaidViewer chart={pattern.diagramMermaid} title={pattern.title} />
               </div>
 
-              {/* Key Takeaways */}
+              {/* IconKey Takeaways */}
               <div
                 className="rounded-xl p-4 border space-y-2"
                 style={{
@@ -352,13 +352,13 @@ export const ArchitecturePage: React.FC = () => {
                   className="text-xs font-bold uppercase tracking-wider font-mono flex items-center gap-1.5"
                   style={{ color: 'var(--text-primary)' }}
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <IconCircleCheck className="w-3.5 h-3.5 text-emerald-500" />
                   <span>Exam Takeaways & Architecture Best Practices</span>
                 </h4>
                 <ul className="space-y-1.5 text-xs" style={{ color: 'var(--text-secondary)' }}>
                   {pattern.keyTakeaways.map((tip, i) => (
                     <li key={i} className="flex items-start gap-2 leading-relaxed">
-                      <ArrowRight className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: 'var(--text-accent)' }} />
+                      <IconArrowRight className="w-3.5 h-3.5 shrink-0 mt-0.5" style={{ color: 'var(--text-accent)' }} />
                       <span>{tip}</span>
                     </li>
                   ))}

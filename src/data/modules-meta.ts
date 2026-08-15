@@ -13,7 +13,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 1,
     "title": "AWS Fundamentals",
     "domain": "Fundamentals",
-    "icon": "Globe",
+    "icon": "IconCloud",
     "examWeight": "~10%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -28,7 +28,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 2,
     "title": "Identity and Access Management (IAM)",
     "domain": "Security",
-    "icon": "ShieldCheck",
+    "icon": "IconUserShield",
     "examWeight": "~15-20%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -43,7 +43,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 3,
     "title": "Compute Services",
     "domain": "Compute",
-    "icon": "Cpu",
+    "icon": "IconCpu",
     "examWeight": "~20-25%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -58,7 +58,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 4,
     "title": "Storage Services",
     "domain": "Storage",
-    "icon": "HardDrive",
+    "icon": "IconArchive",
     "examWeight": "~15-20%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -73,7 +73,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 5,
     "title": "Database Services",
     "domain": "Database",
-    "icon": "Database",
+    "icon": "IconDatabase",
     "examWeight": "~15-20%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -88,7 +88,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 6,
     "title": "Networking & Content Delivery",
     "domain": "Networking",
-    "icon": "Network",
+    "icon": "IconTopologyStar",
     "examWeight": "~20-25%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -103,7 +103,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 7,
     "title": "Security & Compliance",
     "domain": "Security",
-    "icon": "Lock",
+    "icon": "IconShieldLock",
     "examWeight": "~20-25%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -118,7 +118,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 8,
     "title": "Application Integration",
     "domain": "Integration",
-    "icon": "Layers",
+    "icon": "IconArrowsJoin",
     "examWeight": "~10-15%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -133,7 +133,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 9,
     "title": "Monitoring & Management",
     "domain": "Management",
-    "icon": "Activity",
+    "icon": "IconChartLine",
     "examWeight": "~10-15%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -148,7 +148,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 10,
     "title": "Migration & Transfer Services",
     "domain": "Migration",
-    "icon": "ArrowRightLeft",
+    "icon": "IconTruckDelivery",
     "examWeight": "~8-12%",
     "timeEstimates": {
       "deepDive": "45 min",
@@ -163,7 +163,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 11,
     "title": "Analytics Services",
     "domain": "Analytics",
-    "icon": "BarChart2",
+    "icon": "IconChartHistogram",
     "examWeight": "~8-12%",
     "timeEstimates": {
       "deepDive": "45 min",
@@ -178,7 +178,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 12,
     "title": "Architecture Patterns",
     "domain": "Architecture",
-    "icon": "Workflow",
+    "icon": "IconHierarchy3",
     "examWeight": "~25-30%",
     "timeEstimates": {
       "deepDive": "30 min",
@@ -193,7 +193,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 13,
     "title": "Cost Optimization",
     "domain": "Cost",
-    "icon": "Coins",
+    "icon": "IconCoin",
     "examWeight": "~10-15%",
     "timeEstimates": {
       "deepDive": "45 min",
@@ -208,7 +208,7 @@ export const MODULES_METADATA: ModuleMeta[] = [
     "number": 14,
     "title": "Practice",
     "domain": "Practice",
-    "icon": "Award",
+    "icon": "IconClipboardCheck",
     "examWeight": "Final Prep",
     "timeEstimates": {
       "deepDive": "30 min",

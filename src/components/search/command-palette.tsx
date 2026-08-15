@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Layers, FileText, Award, Workflow, X } from 'lucide-react';
+import { IconSearch, IconStack2, IconFileText, IconAward, IconSitemap, IconX } from '@tabler/icons-react';
 import { MODULES_METADATA } from '../../data/modules-meta';
 import { ModuleMeta } from '../../types';
 
@@ -42,10 +42,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   );
 
   const staticNavigations = [
-    { title: 'Full Exam Simulator (65 Questions, 130 min)', path: '/exam-simulator', icon: Award },
-    { title: 'Architecture Patterns & Vector Diagram Gallery', path: '/architecture', icon: Workflow },
-    { title: 'Interactive 3D Flashcards (Spaced Repetition)', path: '/flashcards', icon: Layers },
-    { title: 'Decision Matrices & Exam Cheat Sheets', path: '/cheatsheets', icon: FileText },
+    { title: 'Full Exam Simulator (65 Questions, 130 min)', path: '/exam-simulator', icon: IconAward },
+    { title: 'Architecture Patterns & Vector Diagram Gallery', path: '/architecture', icon: IconSitemap },
+    { title: 'Interactive 3D Flashcards (Spaced Repetition)', path: '/flashcards', icon: IconStack2 },
+    { title: 'Decision Matrices & Exam Cheat Sheets', path: '/cheatsheets', icon: IconFileText },
   ].filter((nav) => nav.title.toLowerCase().includes(query.toLowerCase()));
 
   const handleNavClick = (path: string) => {
@@ -75,7 +75,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           borderColor: 'var(--border-default)',
         }}
       >
-        {/* Search Input Bar */}
+        {/* IconSearch Input Bar */}
         <div
           className="flex items-center gap-3 px-4 py-3.5 border-b"
           style={{
@@ -83,10 +83,10 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             borderColor: 'var(--border-subtle)',
           }}
         >
-          <Search className="w-5 h-5 shrink-0" style={{ color: 'var(--text-accent)' }} />
+          <IconSearch className="w-5 h-5 shrink-0" style={{ color: 'var(--text-accent)' }} />
           <input
             type="text"
-            placeholder="Search AWS services, modules, cheatsheets, or exams... (ESC to exit)"
+            placeholder="IconSearch AWS services, modules, cheatsheets, or exams... (ESC to exit)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
@@ -98,7 +98,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             className="p-1 rounded-lg hover:opacity-100 opacity-60 cursor-pointer"
             style={{ color: 'var(--text-secondary)' }}
           >
-            <X className="w-4 h-4" />
+            <IconX className="w-4 h-4" />
           </button>
         </div>
 

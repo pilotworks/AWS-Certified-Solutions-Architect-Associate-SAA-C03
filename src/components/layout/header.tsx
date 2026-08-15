@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, Award, Layers, Menu, Workflow, FileText } from 'lucide-react';
+import { IconSearch, IconAward, IconStack2, IconMenu2, IconSitemap, IconFileText } from '@tabler/icons-react';
+import { IconBrandGithub } from '@tabler/icons-react';
 import { ThemeSwitcher } from '../ui/theme-switcher';
 
 interface HeaderProps {
@@ -8,6 +9,8 @@ interface HeaderProps {
   onToggleSidebar: () => void;
   overallProgressPercent: number;
 }
+
+const assetBaseUrl = import.meta.env?.BASE_URL || '/';
 
 export const Header: React.FC<HeaderProps> = ({
   onOpenCommandPalette,
@@ -38,12 +41,12 @@ export const Header: React.FC<HeaderProps> = ({
             className="lg:hidden p-2 rounded-lg transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
-            <Menu className="w-5 h-5" />
+            <IconMenu2 className="w-5 h-5" />
           </button>
 
           <Link to="/" className="flex min-w-0 items-center gap-2.5 cursor-pointer group">
             <img
-              src={`${import.meta.env.BASE_URL}icons/icon-192.svg`}
+              src={`${assetBaseUrl}icons/icon-192.svg`}
               alt="AWS SAA-C03 Hub"
               className="w-9 h-9 rounded-xl shadow-sm transition-transform group-hover:scale-105"
             />
@@ -71,7 +74,7 @@ export const Header: React.FC<HeaderProps> = ({
           </Link>
         </div>
 
-        {/* Center: Search Trigger (Cmd + K) */}
+        {/* Center: IconSearch Trigger (Cmd + K) */}
         <div className="flex-1 max-w-md hidden md:block">
           <button
             onClick={onOpenCommandPalette}
@@ -83,8 +86,8 @@ export const Header: React.FC<HeaderProps> = ({
             }}
           >
             <span className="flex items-center gap-2">
-              <Search className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
-              <span>Search services, cheatsheets, questions...</span>
+              <IconSearch className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+              <span>IconSearch services, cheatsheets, questions...</span>
             </span>
             <kbd
               className="px-2 py-0.5 rounded font-mono text-[10px] border"
@@ -110,7 +113,7 @@ export const Header: React.FC<HeaderProps> = ({
               color: 'var(--text-primary)',
             }}
           >
-            <Search className="w-4 h-4" />
+            <IconSearch className="w-4 h-4" />
           </button>
 
           {/* Quick Nav Buttons */}
@@ -141,7 +144,7 @@ export const Header: React.FC<HeaderProps> = ({
                 fontWeight: isCurrent('/architecture') ? 600 : 500,
               }}
             >
-              <Workflow className="w-3.5 h-3.5 text-sky-500" /> Architecture
+              <IconSitemap className="w-3.5 h-3.5 text-sky-500" /> Architecture
             </Link>
             <Link
               to="/cheatsheets"
@@ -152,7 +155,7 @@ export const Header: React.FC<HeaderProps> = ({
                 fontWeight: isCurrent('/cheatsheets') ? 600 : 500,
               }}
             >
-              <FileText className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Matrices
+              <IconFileText className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Matrices
             </Link>
             <Link
               to="/flashcards"
@@ -163,7 +166,7 @@ export const Header: React.FC<HeaderProps> = ({
                 fontWeight: isCurrent('/flashcards') ? 600 : 500,
               }}
             >
-              <Layers className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Flashcards
+              <IconStack2 className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Flashcards
             </Link>
             <Link
               to="/exam-simulator"
@@ -174,11 +177,26 @@ export const Header: React.FC<HeaderProps> = ({
                 fontWeight: isCurrent('/exam-simulator') ? 600 : 500,
               }}
             >
-              <Award className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Exam Simulator
+              <IconAward className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Exam Simulator
             </Link>
           </div>
 
           {/* 3-Mode Theme Switcher (Dark, Light, E-Reader) */}
+          <a
+            href="https://github.com/pilotworks/AWS-Certified-Solutions-Architect-Associate-SAA-C03"
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="Open GitHub repository"
+            title="GitHub repository"
+            className="p-2 rounded-lg border transition-colors hover:opacity-80"
+            style={{
+              backgroundColor: 'var(--bg-elevated)',
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--text-secondary)',
+            }}
+          >
+            <IconBrandGithub className="w-4 h-4" stroke={1.8} />
+          </a>
           <ThemeSwitcher />
 
           {/* Progress Indicator */}

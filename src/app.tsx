@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter, MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { ExternalLink } from 'lucide-react';
+import { IconExternalLink } from '@tabler/icons-react';
 import { MODULES_METADATA } from './data/modules-meta';
 import { ThemeProvider } from './context/theme-context';
 import { Header } from './components/layout/header';
@@ -149,7 +149,7 @@ export function AppContent() {
                     style={{ color: 'var(--text-accent)' }}
                   >
                     <span>ChathurangaVKD / AWS-SAA-C03</span>
-                    <ExternalLink className="w-3 h-3 opacity-70" />
+                    <IconExternalLink className="w-3 h-3 opacity-70" />
                   </a>
                 </div>
               </div>
@@ -161,7 +161,7 @@ export function AppContent() {
         </main>
       </div>
 
-      {/* Global Command Palette Search (Cmd + K) */}
+      {/* Global Command Palette IconSearch (Cmd + K) */}
       <CommandPalette
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}

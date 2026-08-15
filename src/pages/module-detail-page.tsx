@@ -10,17 +10,17 @@ import { PageHead } from '../components/seo/page-head';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import {
-  BookOpen,
-  Zap,
-  Workflow,
-  Award,
-  CheckCircle2,
-  Clock,
-  ArrowLeft,
-  FileText,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+  IconBook,
+  IconBolt,
+  IconSitemap,
+  IconAward,
+  IconCircleCheck,
+  IconClock,
+  IconArrowLeft,
+  IconFileText,
+  IconChevronLeft,
+  IconChevronRight,
+} from '@tabler/icons-react';
 
 interface ModuleDetailPageProps {
   module?: ModuleMeta;
@@ -101,11 +101,11 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
   };
 
   const tabOptions = [
-    { key: 'overview', label: 'Comprehensive Theory', icon: BookOpen },
-    { key: 'fast', label: 'Fast-Track Notes', icon: Zap },
-    { key: 'diagrams', label: 'Diagrams', icon: Workflow },
-    { key: 'quiz', label: `Practice (${practiceQuestions.length})`, icon: Award },
-    { key: 'notes', label: 'Personal Notes', icon: FileText },
+    { key: 'overview', label: 'Comprehensive Theory', icon: IconBook },
+    { key: 'fast', label: 'Fast-Track Notes', icon: IconBolt },
+    { key: 'diagrams', label: 'Diagrams', icon: IconSitemap },
+    { key: 'quiz', label: `Practice (${practiceQuestions.length})`, icon: IconAward },
+    { key: 'notes', label: 'Personal Notes', icon: IconFileText },
   ];
 
   return (
@@ -125,7 +125,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
           className="flex items-center gap-1.5 text-xs font-semibold hover:opacity-100 opacity-70 transition-opacity cursor-pointer"
           style={{ color: 'var(--text-secondary)' }}
         >
-          <ArrowLeft className="w-4 h-4" /> Back to Dashboard
+          <IconArrowLeft className="w-4 h-4" /> Back to Dashboard
         </button>
 
         <div className="flex items-center gap-3">
@@ -136,7 +136,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
               onClick={onToggleComplete}
               className={isCompleted ? 'text-emerald-500 font-semibold' : ''}
             >
-              <CheckCircle2 className={`w-4 h-4 ${isCompleted ? 'text-emerald-500' : 'opacity-40'}`} />
+              <IconCircleCheck className={`w-4 h-4 ${isCompleted ? 'text-emerald-500' : 'opacity-40'}`} />
               {isCompleted ? 'Completed' : 'Mark as Completed'}
             </Button>
           )}
@@ -174,7 +174,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
           style={{ color: 'var(--text-secondary)' }}
         >
           <span className="flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Deep Dive: {currentModule.timeEstimates.deepDive}
+            <IconClock className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Deep Dive: {currentModule.timeEstimates.deepDive}
           </span>
           <span>•</span>
           <span>Fast Learn: {currentModule.timeEstimates.fastLearn}</span>
@@ -328,7 +328,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
               borderColor: 'var(--border-subtle)',
             }}
           >
-            <ChevronLeft
+            <IconChevronLeft
               className="w-5 h-5 shrink-0 group-hover:-translate-x-1 transition-transform"
               style={{ color: 'var(--text-accent)' }}
             />
@@ -362,7 +362,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
                 {nextModule.title}
               </div>
             </div>
-            <ChevronRight
+            <IconChevronRight
               className="w-5 h-5 shrink-0 group-hover:translate-x-1 transition-transform"
               style={{ color: 'var(--text-accent)' }}
             />

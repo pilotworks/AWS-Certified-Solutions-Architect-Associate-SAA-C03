@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { WifiOff } from 'lucide-react';
+import { IconWifiOff } from '@tabler/icons-react';
 
 export const OfflineStatus: React.FC = () => {
   const [isOffline, setIsOffline] = useState(
@@ -27,7 +27,7 @@ export const OfflineStatus: React.FC = () => {
       className="fixed top-16 left-0 right-0 z-40 flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium shadow-sm"
       style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--text-accent)' }}
     >
-      <WifiOff className="h-3.5 w-3.5" />
+      <IconWifiOff className="h-3.5 w-3.5" />
       <span>Offline mode — nội dung học và tiến độ vẫn dùng được trên thiết bị này.</span>
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { FlashcardItem } from '../../types';
 import { Flashcard3D } from './flashcard-3d';
 import { Button } from '../ui/button';
-import { ChevronLeft, ChevronRight, Shuffle, CheckCircle, Filter } from 'lucide-react';
+import { IconChevronLeft, IconChevronRight, IconArrowsShuffle, IconCircleCheck, IconFilter } from '@tabler/icons-react';
 import { Badge } from '../ui/badge';
 
 interface FlashcardDeckProps {
@@ -64,7 +64,7 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Category Filter & Controls */}
+      {/* Category IconFilter & Controls */}
       <div
         className="rounded-2xl p-4 md:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border shadow-sm transition-colors"
         style={{
@@ -74,7 +74,7 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
       >
         <div className="flex items-center gap-2 overflow-x-auto max-w-full pb-2 md:pb-0 scrollbar-none">
           <span className="text-xs flex items-center gap-1 shrink-0 font-medium" style={{ color: 'var(--text-muted)' }}>
-            <Filter className="w-3.5 h-3.5" /> Domain:
+            <IconFilter className="w-3.5 h-3.5" /> Domain:
           </span>
           {categories.map((cat) => (
             <button
@@ -94,10 +94,10 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
 
         <div className="flex items-center gap-3">
           <Badge variant="emerald">
-            <CheckCircle className="w-3.5 h-3.5" /> Mastered: {masteredIds.length}
+            <IconCircleCheck className="w-3.5 h-3.5" /> Mastered: {masteredIds.length}
           </Badge>
-          <Button variant="ghost" size="sm" onClick={handleShuffle} title="Shuffle Deck">
-            <Shuffle className="w-4 h-4" /> Shuffle
+          <Button variant="ghost" size="sm" onClick={handleShuffle} title="IconArrowsShuffle Deck">
+            <IconArrowsShuffle className="w-4 h-4" /> IconArrowsShuffle
           </Button>
         </div>
       </div>
@@ -131,7 +131,7 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
               onClick={handlePrev}
               className="px-6"
             >
-              <ChevronLeft className="w-5 h-5" /> Prev
+              <IconChevronLeft className="w-5 h-5" /> Prev
             </Button>
             <Button
               variant="primary"
@@ -139,7 +139,7 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
               onClick={handleNext}
               className="px-6"
             >
-              Next <ChevronRight className="w-5 h-5" />
+              Next <IconChevronRight className="w-5 h-5" />
             </Button>
           </div>
         </div>

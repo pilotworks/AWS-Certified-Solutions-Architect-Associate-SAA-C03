@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { DecisionMatrixCategory } from '../../types';
-import { Search, CheckCircle2, XCircle, Layers } from 'lucide-react';
+import { IconSearch, IconCircleCheck, IconCircleX, IconStack2 } from '@tabler/icons-react';
 
 interface DecisionMatrixTableProps {
   categories: DecisionMatrixCategory[];
@@ -66,7 +66,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
 
   return (
     <div className="space-y-6">
-      {/* Category Tabs & Search Bar */}
+      {/* Category Tabs & IconSearch Bar */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         {/* Category Pills */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full scrollbar-none">
@@ -83,7 +83,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
                   border: isActive ? '1px solid var(--accent-border)' : '1px solid var(--border-subtle)',
                 }}
               >
-                <Layers
+                <IconStack2
                   className="w-3.5 h-3.5"
                   style={{ color: isActive ? 'var(--text-accent)' : 'var(--text-muted)' }}
                 />
@@ -93,9 +93,9 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
           })}
         </div>
 
-        {/* Filter Input */}
+        {/* IconFilter Input */}
         <div className="relative min-w-[240px]">
-          <Search
+          <IconSearch
             className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2"
             style={{ color: 'var(--text-muted)' }}
           />
@@ -103,7 +103,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
             type="text"
             value={currentSearch}
             onChange={(e) => handleSearchInput(e.target.value)}
-            placeholder="Search matrix items..."
+            placeholder="IconSearch matrix items..."
             className="w-full pl-9 pr-4 py-2 rounded-xl text-base md:text-xs transition-colors focus:outline-none"
             style={{
               backgroundColor: 'var(--bg-elevated)',
@@ -209,9 +209,9 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
                     <td key={col.key} className="py-3.5 px-4 align-top" style={{ color: 'var(--text-secondary)' }}>
                       {typeof val === 'boolean' ? (
                         val ? (
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                          <IconCircleCheck className="w-4 h-4 text-emerald-500" />
                         ) : (
-                          <XCircle className="w-4 h-4 text-rose-500" />
+                          <IconCircleX className="w-4 h-4 text-rose-500" />
                         )
                       ) : (
                         <span className="leading-relaxed">{val || '—'}</span>
@@ -260,7 +260,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
                     borderColor: 'rgba(16, 185, 129, 0.25)',
                   }}
                 >
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                  <IconCircleCheck className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold text-emerald-600 dark:text-emerald-400 block mb-0.5">Best For:</span>
                     <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-primary)' }}>{item.bestFor}</p>
@@ -275,7 +275,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
                       borderColor: 'rgba(239, 68, 68, 0.25)',
                     }}
                   >
-                    <XCircle className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+                    <IconCircleX className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                     <div>
                       <span className="font-bold text-rose-600 dark:text-rose-400 block mb-0.5">Exam Trap / Avoid When:</span>
                       <p className="text-[11px] leading-relaxed" style={{ color: 'var(--text-primary)' }}>{item.avoidFor}</p>

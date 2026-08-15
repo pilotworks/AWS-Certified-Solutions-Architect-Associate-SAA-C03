@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTheme, ThemeMode } from '../../context/theme-context';
-import { Moon, Sun, BookOpen } from 'lucide-react';
+import { IconMoon, IconSun, IconBook } from '@tabler/icons-react';
 
 export const ThemeSwitcher: React.FC<{ className?: string }> = ({ className = '' }) => {
   const { theme, setTheme } = useTheme();
 
   const options: { mode: ThemeMode; label: string; icon: React.FC<{ className?: string }> }[] = [
-    { mode: 'dark', label: 'Dark', icon: Moon },
-    { mode: 'light', label: 'Light', icon: Sun },
-    { mode: 'reader', label: 'E-Reader', icon: BookOpen },
+    { mode: 'dark', label: 'Dark', icon: IconMoon },
+    { mode: 'light', label: 'Light', icon: IconSun },
+    { mode: 'reader', label: 'E-Reader', icon: IconBook },
   ];
 
   return (

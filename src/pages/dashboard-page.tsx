@@ -6,17 +6,17 @@ import { PageHead } from '../components/seo/page-head';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import {
-  BookOpen,
-  Zap,
-  Award,
-  Layers,
-  Clock,
-  CheckCircle2,
-  ArrowRight,
-  ChevronRight,
-  Workflow,
-  FileText,
-} from 'lucide-react';
+  IconBook,
+  IconBolt,
+  IconAward,
+  IconStack2,
+  IconClock,
+  IconCircleCheck,
+  IconArrowRight,
+  IconChevronRight,
+  IconSitemap,
+  IconFileText,
+} from '@tabler/icons-react';
 
 interface DashboardPageProps {
   onSelectModule?: (moduleId: string) => void;
@@ -104,7 +104,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               border: '1px solid var(--accent-border)',
             }}
           >
-            <Award className="w-3.5 h-3.5" /> AWS Certified Solutions Architect – Associate (SAA-C03)
+            <IconAward className="w-3.5 h-3.5" /> AWS Certified Solutions Architect – Associate (SAA-C03)
           </div>
 
           <h1
@@ -123,7 +123,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <Button
               onClick={() => handleNavigate('/exam-simulator')}
               size="md"
-              icon={<Award className="w-4 h-4" />}
+              icon={<IconAward className="w-4 h-4" />}
             >
               Mock Exam Simulator
             </Button>
@@ -131,7 +131,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               onClick={() => handleNavigate('/architecture')}
               variant="secondary"
               size="md"
-              icon={<Workflow className="w-4 h-4 text-sky-500" />}
+              icon={<IconSitemap className="w-4 h-4 text-sky-500" />}
             >
               Architecture Patterns
             </Button>
@@ -139,7 +139,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               onClick={() => handleNavigate('/flashcards')}
               variant="secondary"
               size="md"
-              icon={<Layers className="w-4 h-4" />}
+              icon={<IconStack2 className="w-4 h-4" />}
             >
               3D Flashcards
             </Button>
@@ -147,7 +147,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               onClick={() => handleNavigate('/cheatsheets')}
               variant="secondary"
               size="md"
-              icon={<FileText className="w-4 h-4" />}
+              icon={<IconFileText className="w-4 h-4" />}
             >
               Decision Matrices
             </Button>
@@ -161,7 +161,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
           className="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2"
           style={{ color: 'var(--text-muted)' }}
         >
-          <Zap className="w-4 h-4" style={{ color: 'var(--text-accent)' }} /> Choose Your Learning Acceleration Mode
+          <IconBolt className="w-4 h-4" style={{ color: 'var(--text-accent)' }} /> Choose Your Learning Acceleration Mode
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -190,7 +190,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Ultra-condensed review targeting high-yield exam decision patterns and critical keywords.
             </p>
             <div className="text-xs font-bold flex items-center gap-1" style={{ color: 'var(--text-accent)' }}>
-              Ultra-Fast Cards Only <ChevronRight className="w-3.5 h-3.5" />
+              Ultra-Fast Cards Only <IconChevronRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
@@ -219,7 +219,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Balanced curriculum combining fast notes, architecture diagrams, and targeted practice quizzes.
             </p>
             <div className="text-xs font-bold flex items-center gap-1" style={{ color: '#0284C7' }}>
-              Recommended Path <ChevronRight className="w-3.5 h-3.5" />
+              Recommended Path <IconChevronRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
@@ -248,7 +248,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               Deep architectural immersion for beginners with exhaustive theory and scenario problem-solving.
             </p>
             <div className="text-xs font-bold flex items-center gap-1" style={{ color: '#9333EA' }}>
-              Full Immersion <ChevronRight className="w-3.5 h-3.5" />
+              Full Immersion <IconChevronRight className="w-3.5 h-3.5" />
             </div>
           </div>
         </div>
@@ -259,7 +259,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
             <h2 className="text-xl font-bold flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-              <BookOpen className="w-5 h-5" style={{ color: 'var(--text-accent)' }} />
+              <IconBook className="w-5 h-5" style={{ color: 'var(--text-accent)' }} />
               14 SAA-C03 Curriculum Modules
             </h2>
             <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
@@ -304,7 +304,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
                     <div className="flex items-center gap-1">
                       {isCompleted && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                        <IconCircleCheck className="w-5 h-5 text-emerald-500" />
                       )}
                     </div>
                   </div>
@@ -325,7 +325,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     </span>
                     <span>•</span>
                     <span className="flex items-center gap-1">
-                      <Clock className="w-3 h-3" /> {m.timeEstimates.fastLearn}
+                      <IconClock className="w-3 h-3" /> {m.timeEstimates.fastLearn}
                     </span>
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                   }}
                 >
                   <span>Explore Module</span>
-                  <ArrowRight
+                  <IconArrowRight
                     className="w-4 h-4 group-hover:translate-x-1 transition-transform"
                     style={{ color: 'var(--text-accent)' }}
                   />

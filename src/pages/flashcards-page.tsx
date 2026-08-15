@@ -4,7 +4,7 @@ import { FLASHCARDS_DATA } from '../data/flashcards';
 import { getDocContent, parseFlashcards } from '../utils/content-loader';
 import { FlashcardDeck } from '../components/flashcard/flashcard-deck';
 import { PageHead } from '../components/seo/page-head';
-import { Layers } from 'lucide-react';
+import { IconStack2 } from '@tabler/icons-react';
 
 interface FlashcardsPageProps {
   masteredIds?: string[];
@@ -60,7 +60,7 @@ export const FlashcardsPage: React.FC<FlashcardsPageProps> = ({
             border: '1px solid var(--accent-border)',
           }}
         >
-          <Layers className="w-3.5 h-3.5" /> 3D Spaced-Repetition Deck
+          <IconStack2 className="w-3.5 h-3.5" /> 3D Spaced-Repetition Deck
         </div>
         <h1
           className="text-2xl md:text-3xl font-extrabold tracking-tight mb-2"

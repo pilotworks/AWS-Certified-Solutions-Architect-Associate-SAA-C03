@@ -3,25 +3,28 @@ import { Link, useLocation } from 'react-router-dom';
 import { MODULES_METADATA } from '../../data/modules-meta';
 import { ModuleMeta } from '../../types';
 import {
-  Globe,
-  ShieldCheck,
-  Cpu,
-  HardDrive,
-  Database,
-  Network,
-  Lock,
-  Layers,
-  Activity,
-  ArrowRightLeft,
-  BarChart2,
-  Workflow,
-  Coins,
-  Award,
-  CheckCircle2,
-  Zap,
-  FileText,
-  Compass,
-} from 'lucide-react';
+  IconCloud,
+  IconUserShield,
+  IconCpu,
+  IconArchive,
+  IconDatabase,
+  IconTopologyStar,
+  IconShieldLock,
+  IconArrowsJoin,
+  IconChartLine,
+  IconTruckDelivery,
+  IconChartHistogram,
+  IconHierarchy3,
+  IconCoin,
+  IconClipboardCheck,
+  IconSitemap,
+  IconAward,
+  IconStack2,
+  IconCircleCheck,
+  IconBolt,
+  IconFileText,
+  IconCompass,
+} from '@tabler/icons-react';
 
 interface SidebarProps {
   completedModuleIds: string[];
@@ -30,20 +33,20 @@ interface SidebarProps {
 }
 
 const ICON_MAP: Record<string, React.FC<{ className?: string }>> = {
-  Globe,
-  ShieldCheck,
-  Cpu,
-  HardDrive,
-  Database,
-  Network,
-  Lock,
-  Layers,
-  Activity,
-  ArrowRightLeft,
-  BarChart2,
-  Workflow,
-  Coins,
-  Award,
+  IconCloud,
+  IconUserShield,
+  IconCpu,
+  IconArchive,
+  IconDatabase,
+  IconTopologyStar,
+  IconShieldLock,
+  IconArrowsJoin,
+  IconChartLine,
+  IconTruckDelivery,
+  IconChartHistogram,
+  IconHierarchy3,
+  IconCoin,
+  IconClipboardCheck,
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -84,7 +87,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className="text-[11px] font-bold uppercase tracking-wider px-2 py-1 flex items-center gap-1.5"
             style={{ color: 'var(--text-muted)' }}
           >
-            <Compass className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Core Portals
+            <IconCompass className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Core Portals
           </div>
           <div className="space-y-1 mt-1">
             <Link
@@ -97,7 +100,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 border: isCurrent('/') ? '1px solid var(--accent-border)' : '1px solid transparent',
               }}
             >
-              <Zap className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+              <IconBolt className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
               <span>Study Dashboard & Modes</span>
             </Link>
 
@@ -111,7 +114,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 border: isCurrent('/architecture') ? '1px solid var(--accent-border)' : '1px solid transparent',
               }}
             >
-              <Workflow className="w-4 h-4 text-sky-500" />
+              <IconSitemap className="w-4 h-4 text-sky-500" />
               <span>Architecture Patterns Gallery</span>
             </Link>
 
@@ -125,7 +128,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 border: isCurrent('/exam-simulator') ? '1px solid var(--accent-border)' : '1px solid transparent',
               }}
             >
-              <Award className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+              <IconAward className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
               <span>Exam Simulator (65 Qs)</span>
             </Link>
 
@@ -139,7 +142,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 border: isCurrent('/flashcards') ? '1px solid var(--accent-border)' : '1px solid transparent',
               }}
             >
-              <Layers className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+              <IconStack2 className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
               <span>3D Flashcards Deck</span>
             </Link>
 
@@ -153,7 +156,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 border: isCurrent('/cheatsheets') ? '1px solid var(--accent-border)' : '1px solid transparent',
               }}
             >
-              <FileText className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+              <IconFileText className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
               <span>Decision Matrices & Sheets</span>
             </Link>
           </div>
@@ -173,7 +176,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Modules Navigation Scroll Area */}
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           {MODULES_METADATA.map((m: ModuleMeta) => {
-            const Icon = ICON_MAP[m.icon] || Globe;
+            const Icon = ICON_MAP[m.icon] || IconCloud;
             const isSelected = location.pathname === `/modules/${m.id}` || location.pathname === `/modules/${m.slug}`;
             const isCompleted = completedModuleIds.includes(m.id);
 
@@ -219,7 +222,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
 
                 {isCompleted ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <IconCircleCheck className="w-4 h-4 text-emerald-500 shrink-0" />
                 ) : (
                   <Icon className="w-3.5 h-3.5 shrink-0 opacity-50 group-hover:opacity-100 transition-opacity" />
                 )}

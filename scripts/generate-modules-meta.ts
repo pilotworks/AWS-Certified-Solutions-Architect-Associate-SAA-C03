@@ -25,20 +25,20 @@ interface ModuleMetaConfig {
 }
 
 const DOMAIN_MAP: Record<string, { domain: string; icon: string; priority: 'CRITICAL' | 'HIGH' | 'MEDIUM'; weight: string }> = {
-  '01-AWS-Fundamentals': { domain: 'Fundamentals', icon: 'Globe', priority: 'CRITICAL', weight: '~10%' },
-  '02-IAM': { domain: 'Security', icon: 'ShieldCheck', priority: 'CRITICAL', weight: '~15-20%' },
-  '03-Compute': { domain: 'Compute', icon: 'Cpu', priority: 'CRITICAL', weight: '~20-25%' },
-  '04-Storage': { domain: 'Storage', icon: 'HardDrive', priority: 'CRITICAL', weight: '~15-20%' },
-  '05-Database': { domain: 'Database', icon: 'Database', priority: 'CRITICAL', weight: '~15-20%' },
-  '06-Networking': { domain: 'Networking', icon: 'Network', priority: 'CRITICAL', weight: '~20-25%' },
-  '07-Security': { domain: 'Security', icon: 'Lock', priority: 'CRITICAL', weight: '~20-25%' },
-  '08-Application-Integration': { domain: 'Integration', icon: 'Layers', priority: 'HIGH', weight: '~10-15%' },
-  '09-Monitoring': { domain: 'Management', icon: 'Activity', priority: 'HIGH', weight: '~10-15%' },
-  '10-Migration': { domain: 'Migration', icon: 'ArrowRightLeft', priority: 'MEDIUM', weight: '~8-12%' },
-  '11-Analytics': { domain: 'Analytics', icon: 'BarChart2', priority: 'MEDIUM', weight: '~8-12%' },
-  '12-Architecture-Patterns': { domain: 'Architecture', icon: 'Workflow', priority: 'CRITICAL', weight: '~25-30%' },
-  '13-Cost-Optimization': { domain: 'Cost', icon: 'Coins', priority: 'HIGH', weight: '~10-15%' },
-  '14-Practice': { domain: 'Practice', icon: 'Award', priority: 'CRITICAL', weight: 'Final Prep' },
+  '01-AWS-Fundamentals': { domain: 'Fundamentals', icon: 'IconCloud', priority: 'CRITICAL', weight: '~10%' },
+  '02-IAM': { domain: 'Security', icon: 'IconUserShield', priority: 'CRITICAL', weight: '~15-20%' },
+  '03-Compute': { domain: 'Compute', icon: 'IconCpu', priority: 'CRITICAL', weight: '~20-25%' },
+  '04-Storage': { domain: 'Storage', icon: 'IconArchive', priority: 'CRITICAL', weight: '~15-20%' },
+  '05-Database': { domain: 'Database', icon: 'IconDatabase', priority: 'CRITICAL', weight: '~15-20%' },
+  '06-Networking': { domain: 'Networking', icon: 'IconTopologyStar', priority: 'CRITICAL', weight: '~20-25%' },
+  '07-Security': { domain: 'Security', icon: 'IconShieldLock', priority: 'CRITICAL', weight: '~20-25%' },
+  '08-Application-Integration': { domain: 'Integration', icon: 'IconArrowsJoin', priority: 'HIGH', weight: '~10-15%' },
+  '09-Monitoring': { domain: 'Management', icon: 'IconChartLine', priority: 'HIGH', weight: '~10-15%' },
+  '10-Migration': { domain: 'Migration', icon: 'IconTruckDelivery', priority: 'MEDIUM', weight: '~8-12%' },
+  '11-Analytics': { domain: 'Analytics', icon: 'IconChartHistogram', priority: 'MEDIUM', weight: '~8-12%' },
+  '12-Architecture-Patterns': { domain: 'Architecture', icon: 'IconHierarchy3', priority: 'CRITICAL', weight: '~25-30%' },
+  '13-Cost-Optimization': { domain: 'Cost', icon: 'IconCoin', priority: 'HIGH', weight: '~10-15%' },
+  '14-Practice': { domain: 'Practice', icon: 'IconClipboardCheck', priority: 'CRITICAL', weight: 'Final Prep' },
 };
 
 export function generateModulesMeta() {

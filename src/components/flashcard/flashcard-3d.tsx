@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlashcardItem } from '../../types';
-import { RotateCw, Check, Clock, Lightbulb } from 'lucide-react';
+import { IconRotateClockwise, IconCheck, IconClock, IconBulb } from '@tabler/icons-react';
 import { Badge } from '../ui/badge';
 
 interface Flashcard3DProps {
@@ -45,7 +45,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
               </Badge>
               {isMastered && (
                 <Badge variant="emerald" size="sm">
-                  <Check className="w-3 h-3" /> Mastered
+                  <IconCheck className="w-3 h-3" /> Mastered
                 </Badge>
               )}
             </div>
@@ -70,7 +70,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
             style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
           >
             <span className="flex items-center gap-1" style={{ color: 'var(--text-accent)' }}>
-              <RotateCw className="w-3.5 h-3.5" /> Click or tap card to flip
+              <IconRotateClockwise className="w-3.5 h-3.5" /> Click or tap card to flip
             </span>
             <span className="font-mono">QUESTION</span>
           </div>
@@ -87,7 +87,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
           <div>
             <div className="flex items-center justify-between gap-2 mb-3">
               <Badge variant="cyan" size="md">
-                Solution & Key Facts
+                Solution & IconKey Facts
               </Badge>
               <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-accent)' }}>
                 ANSWER
@@ -110,7 +110,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
                   color: 'var(--text-accent)',
                 }}
               >
-                <Lightbulb className="w-4 h-4 shrink-0 mt-0.5" />
+                <IconBulb className="w-4 h-4 shrink-0 mt-0.5" />
                 <div>
                   <strong>Exam Tip:</strong> {card.examTip}
                 </div>
@@ -133,7 +133,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
                 color: 'var(--text-secondary)',
               }}
             >
-              <Clock className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Review Later
+              <IconClock className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Review Later
             </button>
             <button
               onClick={onMastered}
@@ -144,7 +144,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
                 color: '#10B981',
               }}
             >
-              <Check className="w-3.5 h-3.5" /> Mastered
+              <IconCheck className="w-3.5 h-3.5" /> Mastered
             </button>
           </div>
         </div>

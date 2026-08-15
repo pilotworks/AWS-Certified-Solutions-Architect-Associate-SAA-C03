@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MermaidViewer } from '../architecture/mermaid-viewer';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { MermaidViewer } from "../architecture/mermaid-viewer";
 import {
-  Copy,
-  Check,
-  Info,
-  Lightbulb,
-  AlertCircle,
-  AlertTriangle,
-  ShieldAlert,
-  CheckSquare,
-  Square,
-  ExternalLink,
-} from 'lucide-react';
+  IconCopy,
+  IconCheck,
+  IconInfoCircle,
+  IconBulb,
+  IconAlertCircle,
+  IconAlertTriangle,
+  IconShieldExclamation,
+  IconSquareCheck,
+  IconSquare,
+  IconExternalLink,
+} from "@tabler/icons-react";
 
 interface MarkdownRendererProps {
   content: string;
   className?: string;
 }
 
-export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, className = '' }) => {
+export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
+  content,
+  className = "",
+}) => {
   if (!content || !content.trim()) {
     return (
-      <div className="italic py-8 opacity-60 text-sm" style={{ color: 'var(--text-muted)' }}>
+      <div
+        className="italic py-8 opacity-60 text-sm"
+        style={{ color: "var(--text-muted)" }}
+      >
         No content available.
       </div>
     );
@@ -33,7 +39,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
   return (
     <div
       className={`space-y-4 leading-relaxed text-sm md:text-base selection:bg-amber-500/20 max-w-none ${className}`}
-      style={{ color: 'var(--text-primary)' }}
+      style={{ color: "var(--text-primary)" }}
     >
       {blocks}
     </div>
@@ -46,7 +52,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content, cla
 
 function parseMarkdown(md: string): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
-  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
   let i = 0;
 
   while (i < lines.length) {
@@ -59,36 +65,48 @@ function parseMarkdown(md: string): React.ReactNode[] {
     }
 
     // 2. Fenced Code Block / Mermaid
-    if (line.startsWith('```')) {
+    if (line.startsWith("```")) {
       const lang = line.slice(3).trim().toLowerCase();
       const codeLines: string[] = [];
       i++;
-      while (i < lines.length && !lines[i].startsWith('```')) {
+      while (i < lines.length && !lines[i].startsWith("```")) {
         codeLines.push(lines[i]);
         i++;
       }
-      if (i < lines.length && lines[i].startsWith('```')) {
+      if (i < lines.length && lines[i].startsWith("```")) {
         i++; // consume closing ```
       }
-      const rawCode = codeLines.join('\n');
+      const rawCode = codeLines.join("\n");
 
-      if (lang === 'mermaid') {
+      if (lang === "mermaid") {
         nodes.push(<MermaidViewer key={`mermaid-${i}`} chart={rawCode} />);
       } else {
-        nodes.push(<CodeBlock key={`code-${i}`} code={rawCode} language={lang} />);
+        nodes.push(
+          <CodeBlock key={`code-${i}`} code={rawCode} language={lang} />,
+        );
       }
       continue;
     }
 
     // 3. GitHub Callout Alerts: > [!NOTE], > [!TIP], > [!IMPORTANT], > [!WARNING], > [!CAUTION]
-    const alertMatch = line.match(/^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i);
+    const alertMatch = line.match(
+      /^>\s*\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]/i,
+    );
     if (alertMatch) {
-      const alertType = alertMatch[1].toUpperCase() as 'NOTE' | 'TIP' | 'IMPORTANT' | 'WARNING' | 'CAUTION';
+      const alertType = alertMatch[1].toUpperCase() as
+        | "NOTE"
+        | "TIP"
+        | "IMPORTANT"
+        | "WARNING"
+        | "CAUTION";
       const bodyLines: string[] = [];
       i++;
-      while (i < lines.length && (lines[i].startsWith('>') || !lines[i].trim())) {
-        if (lines[i].startsWith('>')) {
-          bodyLines.push(lines[i].replace(/^>\s?/, ''));
+      while (
+        i < lines.length &&
+        (lines[i].startsWith(">") || !lines[i].trim())
+      ) {
+        if (lines[i].startsWith(">")) {
+          bodyLines.push(lines[i].replace(/^>\s?/, ""));
         }
         i++;
       }
@@ -96,18 +114,21 @@ function parseMarkdown(md: string): React.ReactNode[] {
         <AlertBlock
           key={`alert-${i}`}
           type={alertType}
-          content={bodyLines.join('\n').trim()}
-        />
+          content={bodyLines.join("\n").trim()}
+        />,
       );
       continue;
     }
 
     // 4. Standard Blockquote: > text
-    if (line.startsWith('>')) {
+    if (line.startsWith(">")) {
       const quoteLines: string[] = [];
-      while (i < lines.length && (lines[i].startsWith('>') || !lines[i].trim())) {
-        if (lines[i].startsWith('>')) {
-          quoteLines.push(lines[i].replace(/^>\s?/, ''));
+      while (
+        i < lines.length &&
+        (lines[i].startsWith(">") || !lines[i].trim())
+      ) {
+        if (lines[i].startsWith(">")) {
+          quoteLines.push(lines[i].replace(/^>\s?/, ""));
         }
         i++;
       }
@@ -116,13 +137,13 @@ function parseMarkdown(md: string): React.ReactNode[] {
           key={`quote-${i}`}
           className="border-l-4 pl-4 py-2 my-3 rounded-r italic text-sm md:text-base leading-relaxed"
           style={{
-            borderLeftColor: 'var(--text-accent)',
-            backgroundColor: 'var(--accent-bg)',
-            color: 'var(--text-secondary)',
+            borderLeftColor: "var(--text-accent)",
+            backgroundColor: "var(--accent-bg)",
+            color: "var(--text-secondary)",
           }}
         >
-          {parseInline(quoteLines.join(' ').trim())}
-        </blockquote>
+          {parseInline(quoteLines.join(" ").trim())}
+        </blockquote>,
       );
       continue;
     }
@@ -132,7 +153,9 @@ function parseMarkdown(md: string): React.ReactNode[] {
     if (headingMatch) {
       const level = headingMatch[1].length;
       const text = headingMatch[2].trim();
-      nodes.push(<HeadingBlock key={`heading-${i}`} level={level} text={text} />);
+      nodes.push(
+        <HeadingBlock key={`heading-${i}`} level={level} text={text} />,
+      );
       i++;
       continue;
     }
@@ -143,8 +166,8 @@ function parseMarkdown(md: string): React.ReactNode[] {
         <hr
           key={`hr-${i}`}
           className="my-6 border-t"
-          style={{ borderColor: 'var(--border-subtle)' }}
-        />
+          style={{ borderColor: "var(--border-subtle)" }}
+        />,
       );
       i++;
       continue;
@@ -152,13 +175,13 @@ function parseMarkdown(md: string): React.ReactNode[] {
 
     // 7. GFM Tables: must have header and separator line
     if (
-      line.includes('|') &&
+      line.includes("|") &&
       lines[i + 1] &&
-      lines[i + 1].includes('|') &&
+      lines[i + 1].includes("|") &&
       /^\s*\|?\s*[-:]+[-| :]*\s*$/.test(lines[i + 1])
     ) {
       const tableLines: string[] = [];
-      while (i < lines.length && lines[i].includes('|')) {
+      while (i < lines.length && lines[i].includes("|")) {
         tableLines.push(lines[i]);
         i++;
       }
@@ -172,13 +195,13 @@ function parseMarkdown(md: string): React.ReactNode[] {
       const listItems: { text: string; checked?: boolean }[] = [];
 
       while (i < lines.length && /^(\*|-|\+|\d+\.)\s+/.test(lines[i])) {
-        const itemRaw = lines[i].replace(/^(\*|-|\+|\d+\.)\s+/, '');
+        const itemRaw = lines[i].replace(/^(\*|-|\+|\d+\.)\s+/, "");
         const taskMatch = itemRaw.match(/^\[([ xX])\]\s+(.*)$/);
 
         if (taskMatch) {
           listItems.push({
             text: taskMatch[2],
-            checked: taskMatch[1].toLowerCase() === 'x',
+            checked: taskMatch[1].toLowerCase() === "x",
           });
         } else {
           listItems.push({ text: itemRaw });
@@ -191,45 +214,51 @@ function parseMarkdown(md: string): React.ReactNode[] {
           <ol
             key={`ol-${i}`}
             className="list-decimal list-inside space-y-2 my-3 pl-1 text-sm md:text-base"
-            style={{ color: 'var(--text-secondary)' }}
+            style={{ color: "var(--text-secondary)" }}
           >
             {listItems.map((item, idx) => (
               <li key={idx} className="leading-relaxed">
-                <span style={{ color: 'var(--text-primary)' }}>{parseInline(item.text)}</span>
+                <span style={{ color: "var(--text-primary)" }}>
+                  {parseInline(item.text)}
+                </span>
               </li>
             ))}
           </ol>
         ) : (
-          <ul key={`ul-${i}`} className="space-y-2 my-3 pl-1 text-sm md:text-base">
+          <ul
+            key={`ul-${i}`}
+            className="space-y-2 my-3 pl-1 text-sm md:text-base"
+          >
             {listItems.map((item, idx) => (
-              <li key={idx} className="flex items-start gap-2.5 leading-relaxed">
+              <li
+                key={idx}
+                className="flex items-start gap-2.5 leading-relaxed"
+              >
                 {item.checked !== undefined ? (
                   item.checked ? (
-                    <CheckSquare
-                      className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500"
-                    />
+                    <IconSquareCheck className="w-4 h-4 mt-0.5 shrink-0 text-emerald-500" />
                   ) : (
-                    <Square
+                    <IconSquare
                       className="w-4 h-4 mt-0.5 shrink-0 opacity-40"
-                      style={{ color: 'var(--text-muted)' }}
+                      style={{ color: "var(--text-muted)" }}
                     />
                   )
                 ) : (
                   <span
                     className="w-1.5 h-1.5 rounded-full mt-2.5 shrink-0"
-                    style={{ backgroundColor: 'var(--text-accent)' }}
+                    style={{ backgroundColor: "var(--text-accent)" }}
                   />
                 )}
                 <span
-                  className={item.checked ? 'line-through opacity-70' : ''}
-                  style={{ color: 'var(--text-secondary)' }}
+                  className={item.checked ? "line-through opacity-70" : ""}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {parseInline(item.text)}
                 </span>
               </li>
             ))}
           </ul>
-        )
+        ),
       );
       continue;
     }
@@ -240,21 +269,29 @@ function parseMarkdown(md: string): React.ReactNode[] {
     while (
       i < lines.length &&
       lines[i].trim() &&
-      !lines[i].startsWith('#') &&
-      !lines[i].startsWith('```') &&
-      !lines[i].startsWith('>') &&
+      !lines[i].startsWith("#") &&
+      !lines[i].startsWith("```") &&
+      !lines[i].startsWith(">") &&
       !/^(\*|-|\+|\d+\.)\s+/.test(lines[i]) &&
       !/^(\*{3,}|-{3,}|_{3,})$/.test(lines[i].trim()) &&
-      !(lines[i].includes('|') && lines[i + 1] && /^\s*\|?\s*[-:]+[-| :]*\s*$/.test(lines[i + 1]))
+      !(
+        lines[i].includes("|") &&
+        lines[i + 1] &&
+        /^\s*\|?\s*[-:]+[-| :]*\s*$/.test(lines[i + 1])
+      )
     ) {
       paraLines.push(lines[i].trim());
       i++;
     }
 
     nodes.push(
-      <p key={`p-${i}`} className="my-3 leading-relaxed text-sm md:text-base" style={{ color: 'var(--text-primary)' }}>
-        {parseInline(paraLines.join(' '))}
-      </p>
+      <p
+        key={`p-${i}`}
+        className="my-3 leading-relaxed text-sm md:text-base"
+        style={{ color: "var(--text-primary)" }}
+      >
+        {parseInline(paraLines.join(" "))}
+      </p>,
     );
   }
 
@@ -265,11 +302,14 @@ function parseMarkdown(md: string): React.ReactNode[] {
 // INLINE & LINK NORMALIZATION
 // ==========================================
 
-export function normalizeMarkdownLink(rawUrl: string): { url: string; isInternal: boolean } {
-  if (!rawUrl) return { url: '#', isInternal: true };
+export function normalizeMarkdownLink(rawUrl: string): {
+  url: string;
+  isInternal: boolean;
+} {
+  if (!rawUrl) return { url: "#", isInternal: true };
 
   // Strip localhost / port if present
-  let cleaned = rawUrl.replace(/^https?:\/\/localhost(?::\d+)?/i, '').trim();
+  let cleaned = rawUrl.replace(/^https?:\/\/localhost(?::\d+)?/i, "").trim();
 
   // External URLs (http/https/mailto)
   if (/^https?:\/\//i.test(cleaned) || /^mailto:/i.test(cleaned)) {
@@ -277,19 +317,21 @@ export function normalizeMarkdownLink(rawUrl: string): { url: string; isInternal
   }
 
   // Relative or root module links: e.g. "../11-Analytics/README.md", "/11-Analytics/README.md", "11-Analytics/FAST-LEARN.md"
-  const moduleMatch = cleaned.match(/(?:(?:\.\.\/|\.\/|\/|^))(\d{2}-[^/#?]+)(?:\/([^#?]+))?(?:#([^?]*))?/i);
+  const moduleMatch = cleaned.match(
+    /(?:(?:\.\.\/|\.\/|\/|^))(\d{2}-[^/#?]+)(?:\/([^#?]+))?(?:#([^?]*))?/i,
+  );
   if (moduleMatch) {
     const moduleId = moduleMatch[1];
-    const file = (moduleMatch[2] || '').toLowerCase();
-    const hash = moduleMatch[3] ? `#${moduleMatch[3]}` : '';
+    const file = (moduleMatch[2] || "").toLowerCase();
+    const hash = moduleMatch[3] ? `#${moduleMatch[3]}` : "";
 
-    let tab = 'overview';
-    if (file.includes('fast-learn') || file.includes('ultra-fast')) {
-      tab = 'fast';
-    } else if (file.includes('diagram')) {
-      tab = 'diagrams';
-    } else if (file.includes('practice-question') || file.includes('quiz')) {
-      tab = 'quiz';
+    let tab = "overview";
+    if (file.includes("fast-learn") || file.includes("ultra-fast")) {
+      tab = "fast";
+    } else if (file.includes("diagram")) {
+      tab = "diagrams";
+    } else if (file.includes("practice-question") || file.includes("quiz")) {
+      tab = "quiz";
     }
 
     return {
@@ -299,15 +341,19 @@ export function normalizeMarkdownLink(rawUrl: string): { url: string; isInternal
   }
 
   // In-module tab links: e.g. "./FAST-LEARN.md", "./PRACTICE-QUESTIONS.md"
-  if (/^\.?\/?(FAST-LEARN|ULTRA-FAST-LEARN|DIAGRAMS|PRACTICE-QUESTIONS|README)\.md/i.test(cleaned)) {
+  if (
+    /^\.?\/?(FAST-LEARN|ULTRA-FAST-LEARN|DIAGRAMS|PRACTICE-QUESTIONS|README)\.md/i.test(
+      cleaned,
+    )
+  ) {
     const file = cleaned.toLowerCase();
-    let tab = 'overview';
-    if (file.includes('fast-learn') || file.includes('ultra-fast')) {
-      tab = 'fast';
-    } else if (file.includes('diagram')) {
-      tab = 'diagrams';
-    } else if (file.includes('practice-question')) {
-      tab = 'quiz';
+    let tab = "overview";
+    if (file.includes("fast-learn") || file.includes("ultra-fast")) {
+      tab = "fast";
+    } else if (file.includes("diagram")) {
+      tab = "diagrams";
+    } else if (file.includes("practice-question")) {
+      tab = "quiz";
     }
     return {
       url: `?tab=${tab}`,
@@ -316,14 +362,18 @@ export function normalizeMarkdownLink(rawUrl: string): { url: string; isInternal
   }
 
   // App features routes
-  if (/flashcard/i.test(cleaned)) return { url: '/flashcards', isInternal: true };
-  if (/cheat-sheet|matrix|matrices/i.test(cleaned)) return { url: '/cheat-sheets', isInternal: true };
-  if (/exam-sim|simulator/i.test(cleaned)) return { url: '/exam-simulator', isInternal: true };
-  if (/architecture/i.test(cleaned)) return { url: '/architecture', isInternal: true };
-  if (/dashboard/i.test(cleaned)) return { url: '/', isInternal: true };
+  if (/flashcard/i.test(cleaned))
+    return { url: "/flashcards", isInternal: true };
+  if (/cheat-sheet|matrix|matrices/i.test(cleaned))
+    return { url: "/cheat-sheets", isInternal: true };
+  if (/exam-sim|simulator/i.test(cleaned))
+    return { url: "/exam-simulator", isInternal: true };
+  if (/architecture/i.test(cleaned))
+    return { url: "/architecture", isInternal: true };
+  if (/dashboard/i.test(cleaned)) return { url: "/", isInternal: true };
 
   // Anchor hash
-  if (cleaned.startsWith('#')) return { url: cleaned, isInternal: true };
+  if (cleaned.startsWith("#")) return { url: cleaned, isInternal: true };
 
   return { url: cleaned, isInternal: true };
 }
@@ -332,7 +382,8 @@ export function parseInline(text: string): React.ReactNode {
   if (!text) return null;
 
   // Tokenize inline markdown patterns: code, bold-italic, bold, italic, links, images
-  const regex = /(`[^`]+`|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|__[^_]+__|_[^_]+_|~~[^~]+~~|!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\))/g;
+  const regex =
+    /(`[^`]+`|\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*|\*[^*]+\*|__[^_]+__|_[^_]+_|~~[^~]+~~|!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\))/g;
   const elements: React.ReactNode[] = [];
   let lastIdx = 0;
   let match: RegExpExecArray | null;
@@ -345,73 +396,92 @@ export function parseInline(text: string): React.ReactNode {
     const token = match[0];
     const key = `inline-${match.index}`;
 
-    if (token.startsWith('`') && token.endsWith('`')) {
+    if (token.startsWith("`") && token.endsWith("`")) {
       // Inline Code
       elements.push(
         <code
           key={key}
           className="px-1.5 py-0.5 rounded font-mono text-xs font-medium inline-block"
           style={{
-            backgroundColor: 'var(--bg-elevated)',
-            border: '1px solid var(--border-subtle)',
-            color: 'var(--text-accent)',
+            backgroundColor: "var(--bg-elevated)",
+            border: "1px solid var(--border-subtle)",
+            color: "var(--text-accent)",
           }}
         >
           {token.slice(1, -1)}
-        </code>
+        </code>,
       );
-    } else if (token.startsWith('***') && token.endsWith('***')) {
+    } else if (token.startsWith("***") && token.endsWith("***")) {
       // Bold + Italic
       elements.push(
-        <strong key={key} className="font-bold italic" style={{ color: 'var(--text-primary)' }}>
+        <strong
+          key={key}
+          className="font-bold italic"
+          style={{ color: "var(--text-primary)" }}
+        >
           {token.slice(3, -3)}
-        </strong>
+        </strong>,
       );
-    } else if (token.startsWith('**') && token.endsWith('**')) {
+    } else if (token.startsWith("**") && token.endsWith("**")) {
       // Bold
       elements.push(
-        <strong key={key} className="font-bold" style={{ color: 'var(--text-primary)' }}>
+        <strong
+          key={key}
+          className="font-bold"
+          style={{ color: "var(--text-primary)" }}
+        >
           {token.slice(2, -2)}
-        </strong>
+        </strong>,
       );
-    } else if (token.startsWith('__') && token.endsWith('__')) {
+    } else if (token.startsWith("__") && token.endsWith("__")) {
       // Bold (underline syntax)
       elements.push(
-        <strong key={key} className="font-bold" style={{ color: 'var(--text-primary)' }}>
+        <strong
+          key={key}
+          className="font-bold"
+          style={{ color: "var(--text-primary)" }}
+        >
           {token.slice(2, -2)}
-        </strong>
+        </strong>,
       );
-    } else if ((token.startsWith('*') && token.endsWith('*')) || (token.startsWith('_') && token.endsWith('_'))) {
+    } else if (
+      (token.startsWith("*") && token.endsWith("*")) ||
+      (token.startsWith("_") && token.endsWith("_"))
+    ) {
       // Italic
       elements.push(
-        <em key={key} className="italic" style={{ color: 'var(--text-secondary)' }}>
+        <em
+          key={key}
+          className="italic"
+          style={{ color: "var(--text-secondary)" }}
+        >
           {token.slice(1, -1)}
-        </em>
+        </em>,
       );
-    } else if (token.startsWith('~~') && token.endsWith('~~')) {
+    } else if (token.startsWith("~~") && token.endsWith("~~")) {
       // Strikethrough
       elements.push(
         <del key={key} className="line-through opacity-70">
           {token.slice(2, -2)}
-        </del>
+        </del>,
       );
-    } else if (token.startsWith('![') && token.includes('](')) {
+    } else if (token.startsWith("![") && token.includes("](")) {
       // Image
-      const alt = token.substring(2, token.indexOf(']('));
-      const src = token.substring(token.indexOf('](') + 2, token.length - 1);
+      const alt = token.substring(2, token.indexOf("]("));
+      const src = token.substring(token.indexOf("](") + 2, token.length - 1);
       elements.push(
         <img
           key={key}
           src={src}
           alt={alt}
           className="rounded-lg max-w-full my-3 border shadow-sm"
-          style={{ borderColor: 'var(--border-subtle)' }}
-        />
+          style={{ borderColor: "var(--border-subtle)" }}
+        />,
       );
-    } else if (token.startsWith('[') && token.includes('](')) {
+    } else if (token.startsWith("[") && token.includes("](")) {
       // Link
-      const label = token.substring(1, token.indexOf(']('));
-      const rawUrl = token.substring(token.indexOf('](') + 2, token.length - 1);
+      const label = token.substring(1, token.indexOf("]("));
+      const rawUrl = token.substring(token.indexOf("](") + 2, token.length - 1);
       const { url, isInternal } = normalizeMarkdownLink(rawUrl);
 
       if (isInternal) {
@@ -420,10 +490,10 @@ export function parseInline(text: string): React.ReactNode {
             key={key}
             to={url}
             className="inline-flex items-center gap-0.5 underline underline-offset-2 hover:opacity-80 transition-opacity font-semibold"
-            style={{ color: 'var(--text-accent)' }}
+            style={{ color: "var(--text-accent)" }}
           >
             <span>{label}</span>
-          </Link>
+          </Link>,
         );
       } else {
         elements.push(
@@ -433,11 +503,11 @@ export function parseInline(text: string): React.ReactNode {
             target="_blank"
             rel="noreferrer noopener"
             className="inline-flex items-center gap-0.5 underline underline-offset-2 hover:opacity-80 transition-opacity font-semibold"
-            style={{ color: 'var(--text-accent)' }}
+            style={{ color: "var(--text-accent)" }}
           >
             <span>{label}</span>
-            <ExternalLink className="w-3 h-3 opacity-70 ml-0.5" />
-          </a>
+            <IconExternalLink className="w-3 h-3 opacity-70 ml-0.5" />
+          </a>,
         );
       }
     }
@@ -459,7 +529,10 @@ export function parseInline(text: string): React.ReactNode {
 // SUB-COMPONENTS
 // ==========================================
 
-const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, language }) => {
+const CodeBlock: React.FC<{ code: string; language?: string }> = ({
+  code,
+  language,
+}) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
@@ -472,31 +545,37 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, langua
     <div
       className="relative rounded-xl overflow-hidden my-4 border shadow-sm"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        borderColor: 'var(--border-subtle)',
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-subtle)",
       }}
     >
       <div
         className="flex items-center justify-between px-4 py-2 border-b text-xs font-mono select-none"
         style={{
-          backgroundColor: 'var(--bg-elevated)',
-          borderColor: 'var(--border-subtle)',
-          color: 'var(--text-muted)',
+          backgroundColor: "var(--bg-elevated)",
+          borderColor: "var(--border-subtle)",
+          color: "var(--text-muted)",
         }}
       >
-        <span className="uppercase tracking-wider font-semibold">{language || 'text'}</span>
+        <span className="uppercase tracking-wider font-semibold">
+          {language || "text"}
+        </span>
         <button
           onClick={handleCopy}
           className="flex items-center gap-1.5 hover:opacity-100 opacity-70 transition-opacity cursor-pointer font-sans text-xs font-medium"
-          style={{ color: 'var(--text-primary)' }}
+          style={{ color: "var(--text-primary)" }}
         >
-          {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-          <span>{copied ? 'Copied' : 'Copy'}</span>
+          {copied ? (
+            <IconCheck className="w-3.5 h-3.5 text-emerald-500" />
+          ) : (
+            <IconCopy className="w-3.5 h-3.5" />
+          )}
+          <span>{copied ? "Copied" : "Copy"}</span>
         </button>
       </div>
       <pre
         className="p-4 text-xs md:text-sm font-mono overflow-x-auto leading-relaxed"
-        style={{ color: 'var(--text-primary)' }}
+        style={{ color: "var(--text-primary)" }}
       >
         <code>{code}</code>
       </pre>
@@ -504,10 +583,17 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({ code, langua
   );
 };
 
-const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }) => {
-  const cleanId = text.toLowerCase().replace(/[^\w\s-]/g, '').trim().replace(/\s+/g, '-');
+const HeadingBlock: React.FC<{ level: number; text: string }> = ({
+  level,
+  text,
+}) => {
+  const cleanId = text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
 
-  const baseStyles = 'font-bold tracking-tight scroll-mt-20';
+  const baseStyles = "font-bold tracking-tight scroll-mt-20";
 
   switch (level) {
     case 1:
@@ -515,7 +601,10 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
         <h1
           id={cleanId}
           className={`${baseStyles} text-2xl md:text-3xl font-extrabold mt-8 mb-4 border-b pb-3`}
-          style={{ color: 'var(--text-primary)', borderColor: 'var(--border-subtle)' }}
+          style={{
+            color: "var(--text-primary)",
+            borderColor: "var(--border-subtle)",
+          }}
         >
           {parseInline(text)}
         </h1>
@@ -525,7 +614,10 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
         <h2
           id={cleanId}
           className={`${baseStyles} text-xl md:text-2xl font-bold mt-7 mb-3 border-b pb-2`}
-          style={{ color: 'var(--text-primary)', borderColor: 'var(--border-subtle)' }}
+          style={{
+            color: "var(--text-primary)",
+            borderColor: "var(--border-subtle)",
+          }}
         >
           {parseInline(text)}
         </h2>
@@ -535,7 +627,7 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
         <h3
           id={cleanId}
           className={`${baseStyles} text-lg md:text-xl font-bold mt-6 mb-2.5`}
-          style={{ color: 'var(--text-accent)' }}
+          style={{ color: "var(--text-accent)" }}
         >
           {parseInline(text)}
         </h3>
@@ -545,7 +637,7 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
         <h4
           id={cleanId}
           className={`${baseStyles} text-base md:text-lg font-semibold mt-5 mb-2`}
-          style={{ color: 'var(--text-primary)' }}
+          style={{ color: "var(--text-primary)" }}
         >
           {parseInline(text)}
         </h4>
@@ -555,7 +647,7 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
         <h5
           id={cleanId}
           className={`${baseStyles} text-sm md:text-base font-semibold mt-4 mb-2`}
-          style={{ color: 'var(--text-secondary)' }}
+          style={{ color: "var(--text-secondary)" }}
         >
           {parseInline(text)}
         </h5>
@@ -564,44 +656,50 @@ const HeadingBlock: React.FC<{ level: number; text: string }> = ({ level, text }
 };
 
 const AlertBlock: React.FC<{
-  type: 'NOTE' | 'TIP' | 'IMPORTANT' | 'WARNING' | 'CAUTION';
+  type: "NOTE" | "TIP" | "IMPORTANT" | "WARNING" | "CAUTION";
   content: string;
 }> = ({ type, content }) => {
   const configs = {
     NOTE: {
-      bg: 'rgba(14, 165, 233, 0.08)',
-      borderColor: 'rgba(14, 165, 233, 0.25)',
-      textColor: '#0284C7',
-      icon: <Info className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />,
-      label: 'Note',
+      bg: "rgba(14, 165, 233, 0.08)",
+      borderColor: "rgba(14, 165, 233, 0.25)",
+      textColor: "#0284C7",
+      icon: <IconInfoCircle className="w-4 h-4 text-sky-500 shrink-0 mt-0.5" />,
+      label: "Note",
     },
     TIP: {
-      bg: 'rgba(16, 185, 129, 0.08)',
-      borderColor: 'rgba(16, 185, 129, 0.25)',
-      textColor: '#059669',
-      icon: <Lightbulb className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />,
-      label: 'Pro Tip',
+      bg: "rgba(16, 185, 129, 0.08)",
+      borderColor: "rgba(16, 185, 129, 0.25)",
+      textColor: "#059669",
+      icon: <IconBulb className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />,
+      label: "Pro Tip",
     },
     IMPORTANT: {
-      bg: 'rgba(168, 85, 247, 0.08)',
-      borderColor: 'rgba(168, 85, 247, 0.25)',
-      textColor: '#9333EA',
-      icon: <AlertCircle className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />,
-      label: 'Important',
+      bg: "rgba(168, 85, 247, 0.08)",
+      borderColor: "rgba(168, 85, 247, 0.25)",
+      textColor: "#9333EA",
+      icon: (
+        <IconAlertCircle className="w-4 h-4 text-purple-500 shrink-0 mt-0.5" />
+      ),
+      label: "Important",
     },
     WARNING: {
-      bg: 'rgba(245, 158, 11, 0.08)',
-      borderColor: 'rgba(245, 158, 11, 0.25)',
-      textColor: '#D97706',
-      icon: <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />,
-      label: 'Exam Warning',
+      bg: "rgba(245, 158, 11, 0.08)",
+      borderColor: "rgba(245, 158, 11, 0.25)",
+      textColor: "#D97706",
+      icon: (
+        <IconAlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+      ),
+      label: "Exam Warning",
     },
     CAUTION: {
-      bg: 'rgba(244, 63, 94, 0.08)',
-      borderColor: 'rgba(244, 63, 94, 0.25)',
-      textColor: '#E11D48',
-      icon: <ShieldAlert className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />,
-      label: 'Caution / Pitfall',
+      bg: "rgba(244, 63, 94, 0.08)",
+      borderColor: "rgba(244, 63, 94, 0.25)",
+      textColor: "#E11D48",
+      icon: (
+        <IconShieldExclamation className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
+      ),
+      label: "Caution / Pitfall",
     },
   };
 
@@ -623,7 +721,10 @@ const AlertBlock: React.FC<{
         >
           {cfg.label}
         </div>
-        <div className="leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+        <div
+          className="leading-relaxed"
+          style={{ color: "var(--text-primary)" }}
+        >
           {parseInline(content)}
         </div>
       </div>
@@ -637,9 +738,9 @@ const TableBlock: React.FC<{ lines: string[] }> = ({ lines }) => {
   const parseRow = (line: string) => {
     return line
       .trim()
-      .replace(/^\|/, '')
-      .replace(/\|$/, '')
-      .split('|')
+      .replace(/^\|/, "")
+      .replace(/\|$/, "")
+      .split("|")
       .map((c) => c.trim());
   };
 
@@ -650,8 +751,8 @@ const TableBlock: React.FC<{ lines: string[] }> = ({ lines }) => {
     <div
       className="my-5 overflow-x-auto rounded-xl border shadow-sm"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        borderColor: 'var(--border-subtle)',
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-subtle)",
       }}
     >
       <table className="w-full text-left text-sm border-collapse min-w-[500px]">
@@ -659,35 +760,39 @@ const TableBlock: React.FC<{ lines: string[] }> = ({ lines }) => {
           <tr
             className="border-b"
             style={{
-              backgroundColor: 'var(--bg-elevated)',
-              borderColor: 'var(--border-subtle)',
+              backgroundColor: "var(--bg-elevated)",
+              borderColor: "var(--border-subtle)",
             }}
           >
             {headerCells.map((header, idx) => (
               <th
                 key={idx}
                 className="px-4 py-3 font-bold text-xs uppercase tracking-wider"
-                style={{ color: 'var(--text-primary)' }}
+                style={{ color: "var(--text-primary)" }}
               >
                 {parseInline(header)}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y" style={{ borderColor: 'var(--border-subtle)' }}>
+        <tbody
+          className="divide-y"
+          style={{ borderColor: "var(--border-subtle)" }}
+        >
           {bodyRows.map((row, rIdx) => (
             <tr
               key={rIdx}
               className="hover:opacity-95 transition-opacity"
               style={{
-                backgroundColor: rIdx % 2 === 0 ? 'transparent' : 'var(--bg-elevated)',
+                backgroundColor:
+                  rIdx % 2 === 0 ? "transparent" : "var(--bg-elevated)",
               }}
             >
               {row.map((cell, cIdx) => (
                 <td
                   key={cIdx}
                   className="px-4 py-3 align-top leading-relaxed"
-                  style={{ color: 'var(--text-secondary)' }}
+                  style={{ color: "var(--text-secondary)" }}
                 >
                   {parseInline(cell)}
                 </td>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, Download, Copy, Check } from 'lucide-react';
+import { IconZoomIn, IconZoomOut, IconRotate, IconMaximize, IconMinimize, IconDownload, IconCopy, IconCheck } from '@tabler/icons-react';
 import { Button } from '../ui/button';
 import { useTheme } from '../../context/theme-context';
 import { renderMermaidSvg } from '../../utils/mermaid-renderer';
@@ -227,7 +227,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            <ZoomIn className="w-4 h-4" />
+            <IconZoomIn className="w-4 h-4" />
           </Button>
           <Button
             variant="ghost"
@@ -237,7 +237,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            <ZoomOut className="w-4 h-4" />
+            <IconZoomOut className="w-4 h-4" />
           </Button>
           <Button
             variant="ghost"
@@ -247,35 +247,35 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            <RotateCcw className="w-4 h-4" />
+            <IconRotate className="w-4 h-4" />
           </Button>
           <div className="w-[1px] h-4 mx-1" style={{ backgroundColor: 'var(--border-subtle)' }} />
           <Button
             variant="ghost"
             size="sm"
             onClick={handleCopyCode}
-            title="Copy Diagram Code"
+            title="IconCopy Diagram Code"
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
+            {copied ? <IconCheck className="w-4 h-4 text-emerald-500" /> : <IconCopy className="w-4 h-4" />}
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleDownloadSVG}
-            title="Download Vector SVG"
+            title="IconDownload Vector SVG"
             className="px-2.5 py-1 text-xs border hover:bg-[var(--bg-card-hover)] text-[var(--text-primary)] font-medium flex items-center gap-1.5 shadow-xs transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            <Download className="w-3.5 h-3.5" />
+            <IconDownload className="w-3.5 h-3.5" />
             <span>SVG</span>
           </Button>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleDownloadPNG}
-            title="Download High-Res PNG"
+            title="IconDownload High-Res PNG"
             className="px-2.5 py-1 text-xs border font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
             style={{
               color: 'var(--text-accent)',
@@ -283,7 +283,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
               backgroundColor: 'var(--accent-bg)',
             }}
           >
-            <Download className="w-3.5 h-3.5" />
+            <IconDownload className="w-3.5 h-3.5" />
             <span>PNG</span>
           </Button>
           <Button
@@ -294,7 +294,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
-            {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            {isFullscreen ? <IconMinimize className="w-4 h-4" /> : <IconMaximize className="w-4 h-4" />}
           </Button>
         </div>
       </div>

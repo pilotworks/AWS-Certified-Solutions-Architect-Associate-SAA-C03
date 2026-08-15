@@ -5,7 +5,7 @@ import { MarkdownRenderer } from '../components/markdown/markdown-renderer';
 import { DecisionMatrixTable } from '../components/ui/decision-matrix-table';
 import { DECISION_MATRICES } from '../data/decision-matrices';
 import { PageHead } from '../components/seo/page-head';
-import { FileText, Zap, Table2, BookOpen, Clock, Lightbulb } from 'lucide-react';
+import { IconFileText, IconBolt, IconTable, IconBook, IconClock, IconBulb } from '@tabler/icons-react';
 
 export const CheatSheetsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,31 +42,31 @@ export const CheatSheetsPage: React.FC = () => {
       title: 'Interactive Decision Matrices',
       file: '',
       desc: 'Dynamic comparison tables for S3 Classes, ELBs, Databases & Storage',
-      icon: Table2,
+      icon: IconTable,
     },
     patterns: {
       title: 'Architecture Patterns Master',
       file: 'reference/SAA-ARCHITECTURE-PATTERN-MASTER-SHEET.md',
       desc: 'HA, Disaster Recovery (RTO/RPO), Multi-tier & Event-Driven Patterns',
-      icon: BookOpen,
+      icon: IconBook,
     },
     quickRef: {
       title: 'Quick Reference Guide',
       file: 'reference/QUICK-REFERENCE.md',
       desc: 'High-yield service limits, comparison matrices & key facts',
-      icon: FileText,
+      icon: IconFileText,
     },
     examDay: {
       title: 'Exam Day 30-Min Cram Sheet',
       file: 'exam-reviews/quick-reference/ULTRA-SHORT-EXAM-DAY.md',
       desc: 'Last-minute memory cards and instant keyword associations',
-      icon: Clock,
+      icon: IconClock,
     },
     memoryCards: {
       title: 'Decision Memory Cards',
       file: 'exam-reviews/quick-reference/MEMORY-CARDS.md',
       desc: 'Scenario-to-solution decision rules for rapid question solving',
-      icon: Lightbulb,
+      icon: IconBulb,
     },
   };
 
@@ -98,7 +98,7 @@ export const CheatSheetsPage: React.FC = () => {
               border: '1px solid var(--accent-border)',
             }}
           >
-            <Zap className="w-3.5 h-3.5" />
+            <IconBolt className="w-3.5 h-3.5" />
             <span>High-Yield Knowledge Base</span>
           </div>
           <h1

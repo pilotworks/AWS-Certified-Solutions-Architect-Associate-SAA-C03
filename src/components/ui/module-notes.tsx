@@ -1,7 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Save, Check, Edit3, Eye, FileText, BookmarkPlus } from 'lucide-react';
-import { Button } from './button';
-import { MarkdownRenderer } from '../markdown/markdown-renderer';
+import React, { useState, useEffect } from "react";
+import {
+  IconDeviceFloppy,
+  IconCheck,
+  IconEdit,
+  IconEye,
+  IconFileText,
+  IconBookmarkPlus,
+} from "@tabler/icons-react";
+import { Button } from "./button";
+import { MarkdownRenderer } from "../markdown/markdown-renderer";
 
 interface ModuleNotesProps {
   moduleId: string;
@@ -13,7 +20,7 @@ interface ModuleNotesProps {
 export const ModuleNotes: React.FC<ModuleNotesProps> = ({
   moduleId,
   moduleTitle,
-  savedNote = '',
+  savedNote = "",
   onSaveNote,
 }) => {
   const [note, setNote] = useState<string>(savedNote);
@@ -21,7 +28,7 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
   const [isSaved, setIsSaved] = useState<boolean>(false);
 
   useEffect(() => {
-    setNote(savedNote || '');
+    setNote(savedNote || "");
   }, [savedNote, moduleId]);
 
   const handleSave = () => {
@@ -31,7 +38,7 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
   };
 
   const handleInsertTemplate = () => {
-    const template = `### 📝 Key Memorization Points for ${moduleTitle}
+    const template = `### 📝 IconKey Memorization Points for ${moduleTitle}
 - **Crucial Exam Rule**: 
 - **Cost Factor**: 
 - **Gotchas / Anti-patterns**: 
@@ -47,25 +54,32 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
     <div
       className="rounded-2xl border p-6 space-y-4 shadow-sm transition-colors"
       style={{
-        backgroundColor: 'var(--bg-card)',
-        borderColor: 'var(--border-subtle)',
+        backgroundColor: "var(--bg-card)",
+        borderColor: "var(--border-subtle)",
       }}
     >
       {/* Header Toolbar */}
       <div
         className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b pb-4"
-        style={{ borderColor: 'var(--border-subtle)' }}
+        style={{ borderColor: "var(--border-subtle)" }}
       >
         <div>
           <h3
             className="text-base font-bold flex items-center gap-2"
-            style={{ color: 'var(--text-primary)' }}
+            style={{ color: "var(--text-primary)" }}
           >
-            <FileText className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
+            <IconFileText
+              className="w-4 h-4"
+              style={{ color: "var(--text-accent)" }}
+            />
             <span>Personal Study Notes & Cheat Sheet</span>
           </h3>
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
-            Auto-saved locally in browser for <span style={{ color: 'var(--text-primary)' }}>{moduleTitle}</span>
+          <p
+            className="text-xs mt-0.5"
+            style={{ color: "var(--text-secondary)" }}
+          >
+            Auto-saved locally in browser for{" "}
+            <span style={{ color: "var(--text-primary)" }}>{moduleTitle}</span>
           </p>
         </div>
 
@@ -77,11 +91,11 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
             title="Insert study template"
             className="text-xs border"
             style={{
-              borderColor: 'var(--border-subtle)',
-              color: 'var(--text-secondary)',
+              borderColor: "var(--border-subtle)",
+              color: "var(--text-secondary)",
             }}
           >
-            <BookmarkPlus className="w-3.5 h-3.5 mr-1" />
+            <IconBookmarkPlus className="w-3.5 h-3.5 mr-1" />
             Template
           </Button>
 
@@ -91,18 +105,18 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
             onClick={() => setIsPreview(!isPreview)}
             className="text-xs border"
             style={{
-              borderColor: 'var(--border-subtle)',
-              color: 'var(--text-secondary)',
+              borderColor: "var(--border-subtle)",
+              color: "var(--text-secondary)",
             }}
           >
             {isPreview ? (
               <>
-                <Edit3 className="w-3.5 h-3.5 mr-1 text-sky-500" />
+                <IconEdit className="w-3.5 h-3.5 mr-1 text-sky-500" />
                 Editor
               </>
             ) : (
               <>
-                <Eye className="w-3.5 h-3.5 mr-1 text-emerald-500" />
+                <IconEye className="w-3.5 h-3.5 mr-1 text-emerald-500" />
                 Preview
               </>
             )}
@@ -114,8 +128,12 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
             onClick={handleSave}
             className="text-xs font-semibold flex items-center gap-1.5"
           >
-            {isSaved ? <Check className="w-3.5 h-3.5" /> : <Save className="w-3.5 h-3.5" />}
-            <span>{isSaved ? 'Saved!' : 'Save Note'}</span>
+            {isSaved ? (
+              <IconCheck className="w-3.5 h-3.5" />
+            ) : (
+              <IconDeviceFloppy className="w-3.5 h-3.5" />
+            )}
+            <span>{isSaved ? "Saved!" : "Note"}</span>
           </Button>
         </div>
       </div>
@@ -125,15 +143,19 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
         <div
           className="min-h-[260px] p-5 rounded-xl border overflow-y-auto"
           style={{
-            backgroundColor: 'var(--bg-elevated)',
-            borderColor: 'var(--border-subtle)',
+            backgroundColor: "var(--bg-elevated)",
+            borderColor: "var(--border-subtle)",
           }}
         >
           {note.trim() ? (
             <MarkdownRenderer content={note} />
           ) : (
-            <p className="text-xs italic" style={{ color: 'var(--text-muted)' }}>
-              No notes written yet. Switch to Editor to jot down your key exam takeaways.
+            <p
+              className="text-xs italic"
+              style={{ color: "var(--text-muted)" }}
+            >
+              No notes written yet. Switch to Editor to jot down your key exam
+              takeaways.
             </p>
           )}
         </div>
@@ -146,13 +168,18 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
             rows={10}
             className="w-full p-4 rounded-xl text-base md:text-xs font-mono transition-colors resize-y leading-relaxed outline-none border focus:ring-1"
             style={{
-              backgroundColor: 'var(--bg-elevated)',
-              borderColor: 'var(--border-subtle)',
-              color: 'var(--text-primary)',
+              backgroundColor: "var(--bg-elevated)",
+              borderColor: "var(--border-subtle)",
+              color: "var(--text-primary)",
             }}
           />
-          <div className="flex items-center justify-between text-[11px]" style={{ color: 'var(--text-muted)' }}>
-            <span>Supports standard Markdown formatting (lists, bold, code blocks)</span>
+          <div
+            className="flex items-center justify-between text-[11px]"
+            style={{ color: "var(--text-muted)" }}
+          >
+            <span>
+              Supports standard Markdown formatting (lists, bold, code blocks)
+            </span>
             <span>{note.length} characters</span>
           </div>
         </div>
