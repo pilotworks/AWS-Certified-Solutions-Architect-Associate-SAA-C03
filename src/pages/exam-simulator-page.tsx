@@ -409,7 +409,7 @@ export const ExamSimulatorPage: React.FC<ExamSimulatorPageProps> = ({ onSaveResu
                 color: flaggedIds.includes(currentQ.id) ? '#EF4444' : 'var(--text-secondary)',
               }}
             >
-              <IconFlag className="w-3.5 h-3.5" /> IconFlag for Review
+              <IconFlag className="w-3.5 h-3.5" /> Flag for Review
             </button>
           </div>
 

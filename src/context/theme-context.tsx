@@ -13,17 +13,18 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 const THEME_STORAGE_KEY = 'aws_hub_theme_v2';
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setThemeState] = useState<ThemeMode>(() => {
+  const [theme, setThemeState] = useState<ThemeMode>('dark');
+
+  useEffect(() => {
     try {
       const saved = localStorage.getItem(THEME_STORAGE_KEY) as ThemeMode | null;
       if (saved && (saved === 'dark' || saved === 'light' || saved === 'reader')) {
-        return saved;
+        setThemeState(saved);
       }
-    } catch (e) {
-      // fallback
+    } catch {
+      // Keep the default dark theme when storage is unavailable.
     }
-    return 'dark';
-  });
+  }, []);
 
   const setTheme = (newTheme: ThemeMode) => {
     setThemeState(newTheme);

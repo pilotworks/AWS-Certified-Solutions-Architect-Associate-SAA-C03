@@ -156,7 +156,7 @@ export const ArchitecturePage: React.FC = () => {
             type="text"
             value={searchQuery}
             onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="IconSearch architecture patterns..."
+            placeholder="Search architecture patterns..."
             className="w-full pl-9 pr-4 py-2 rounded-xl text-base md:text-xs transition-colors focus:outline-none"
             style={{
               backgroundColor: 'var(--bg-elevated)',

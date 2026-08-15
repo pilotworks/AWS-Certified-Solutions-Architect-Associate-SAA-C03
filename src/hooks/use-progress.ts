@@ -16,22 +16,30 @@ const DEFAULT_STATE: UserProgressState = {
 };
 
 export function useProgress() {
-  const [progress, setProgress] = useState<UserProgressState>(() => {
-    try {
-      const item = localStorage.getItem(STORAGE_KEY);
-      return item ? { ...DEFAULT_STATE, ...JSON.parse(item) } : DEFAULT_STATE;
-    } catch {
-      return DEFAULT_STATE;
-    }
-  });
+  const [progress, setProgress] = useState<UserProgressState>(DEFAULT_STATE);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    try {
+      const item = localStorage.getItem(STORAGE_KEY);
+      if (item) {
+        setProgress({ ...DEFAULT_STATE, ...JSON.parse(item) });
+      }
+    } catch {
+      // Keep the default state when stored progress is unavailable or invalid.
+    } finally {
+      setIsLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
     } catch (e) {
       console.error('Failed to save study progress:', e);
     }
-  }, [progress]);
+  }, [isLoaded, progress]);
 
   const toggleModuleComplete = (moduleId: string) => {
     setProgress((prev) => {
@@ -111,4 +119,3 @@ export function useProgress() {
     saveUserNote,
   };
 }
-

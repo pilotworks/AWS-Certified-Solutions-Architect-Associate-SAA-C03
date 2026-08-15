@@ -86,7 +86,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
           <IconSearch className="w-5 h-5 shrink-0" style={{ color: 'var(--text-accent)' }} />
           <input
             type="text"
-            placeholder="IconSearch AWS services, modules, cheatsheets, or exams... (ESC to exit)"
+            placeholder="Search AWS services, modules, cheatsheets, or exams... (ESC to exit)"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus

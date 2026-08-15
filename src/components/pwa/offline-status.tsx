@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { IconWifiOff } from '@tabler/icons-react';
 
 export const OfflineStatus: React.FC = () => {
-  const [isOffline, setIsOffline] = useState(
-    () => typeof navigator !== 'undefined' && !navigator.onLine
-  );
+  const [isOffline, setIsOffline] = useState(false);
 
   useEffect(() => {
     const handleOffline = () => setIsOffline(true);
     const handleOnline = () => setIsOffline(false);
 
+    setIsOffline(!navigator.onLine);
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
 
