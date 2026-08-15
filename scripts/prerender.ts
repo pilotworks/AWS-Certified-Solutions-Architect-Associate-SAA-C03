@@ -5,7 +5,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { MODULES_METADATA } from '../src/data/modules-meta';
 import { ServerApp } from '../src/app';
-import { AUTHOR_NAME, AUTHOR_URL, getOgImageUrl } from '../src/components/seo/seo-config';
+import { AUTHOR_NAME, AUTHOR_URL, getModuleOgImagePath, getOgImageUrl } from '../src/components/seo/seo-config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +18,7 @@ interface RouteConfig {
   description: string;
   keywords: string[];
   schemaJson?: object;
+  ogImagePath?: string;
 }
 
 const DOMAIN = process.env.SITE_URL || 'https://aws-saa-c03.pilotworks.dev';
@@ -30,7 +31,11 @@ function escapeHtmlAttribute(value: string): string {
     .replace(/>/g, '&gt;');
 }
 
-function enrichSchema(schemaJson: object | undefined, canonicalUrl: string): object | undefined {
+function enrichSchema(
+  schemaJson: object | undefined,
+  canonicalUrl: string,
+  ogImageUrl: string,
+): object | undefined {
   if (!schemaJson) return undefined;
 
   const schema = schemaJson as Record<string, unknown>;
@@ -41,7 +46,7 @@ function enrichSchema(schemaJson: object | undefined, canonicalUrl: string): obj
       : {}),
     creator: { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL },
     inLanguage: 'en',
-    image: getOgImageUrl(DOMAIN),
+    image: ogImageUrl,
     url: canonicalUrl,
     mainEntityOfPage: canonicalUrl,
   };
@@ -146,6 +151,7 @@ export function runStaticGenerator() {
       title: `Module ${mod.number < 10 ? '0' : ''}${mod.number}: ${mod.title} | AWS SAA-C03 Hub`,
       description: `Complete study guide for ${mod.title} (${mod.domain}) covering comprehensive theory, fast-track notes, vector diagrams, and ${mod.examWeight} exam questions.`,
       keywords: ['AWS', mod.title, mod.domain, 'SAA-C03', 'Study Guide'],
+      ogImagePath: getModuleOgImagePath(mod.id),
       schemaJson: {
         '@context': 'https://schema.org',
         '@type': 'TechArticle',
@@ -182,6 +188,7 @@ export function runStaticGenerator() {
 
     // Inject Canonical & OpenGraph
     const canonicalUrl = `${DOMAIN}${route.path === '/' ? '' : route.path}`;
+    const ogImageUrl = getOgImageUrl(DOMAIN, route.ogImagePath);
     const safeTitle = escapeHtmlAttribute(route.title);
     const safeDescription = escapeHtmlAttribute(route.description);
     const extraMeta = `
@@ -192,7 +199,7 @@ export function runStaticGenerator() {
   <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:type" content="${route.path === '/' ? 'website' : 'article'}" />
   <meta property="og:site_name" content="AWS SAA-C03 Learning Hub" />
-  <meta property="og:image" content="${getOgImageUrl(DOMAIN)}" />
+  <meta property="og:image" content="${ogImageUrl}" />
   <meta property="og:image:alt" content="AWS SAA-C03 Learning Hub" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -200,12 +207,12 @@ export function runStaticGenerator() {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${safeTitle}" />
   <meta name="twitter:description" content="${safeDescription}" />
-  <meta name="twitter:image" content="${getOgImageUrl(DOMAIN)}" />`;
+  <meta name="twitter:image" content="${ogImageUrl}" />`;
 
     customHtml = customHtml.replace('</head>', `${extraMeta}\n</head>`);
 
     if (route.schemaJson) {
-      const jsonLd = JSON.stringify(enrichSchema(route.schemaJson, canonicalUrl)).replace(/</g, '\\u003c');
+      const jsonLd = JSON.stringify(enrichSchema(route.schemaJson, canonicalUrl, ogImageUrl)).replace(/</g, '\\u003c');
       customHtml = customHtml.replace(
         '</head>',
         `  <script id="schema-org-jsonld" type="application/ld+json">${jsonLd}</script>\n</head>`

@@ -8,6 +8,7 @@ import { QuizEngine } from '../components/quiz/quiz-engine';
 import { ModuleNotes } from '../components/ui/module-notes';
 import { PageHead } from '../components/seo/page-head';
 import { NotFoundPage } from './not-found-page';
+import { getModuleOgImagePath } from '../components/seo/seo-config';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import {
@@ -119,6 +120,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
         description={`In-depth preparation guide for ${currentModule.title} - AWS Certified Solutions Architect Associate (SAA-C03).`}
         keywords={['AWS', currentModule.title, currentModule.domain, 'SAA-C03']}
         canonicalPath={`/modules/${currentModule.id}`}
+        ogImagePath={getModuleOgImagePath(currentModule.id)}
         schemaJson={schemaJson}
       />
 

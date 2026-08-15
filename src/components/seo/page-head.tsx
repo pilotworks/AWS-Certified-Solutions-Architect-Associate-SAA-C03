@@ -8,6 +8,7 @@ export interface PageHeadProps {
   canonicalPath?: string;
   schemaJson?: object;
   robots?: string;
+  ogImagePath?: string;
 }
 
 export const PageHead: React.FC<PageHeadProps> = ({
@@ -17,6 +18,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
   canonicalPath = '',
   schemaJson,
   robots = 'index, follow',
+  ogImagePath,
 }) => {
   useEffect(() => {
     // 1. Update Title
@@ -54,7 +56,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
 
     const siteUrl = import.meta.env.VITE_SITE_URL || SITE_URL;
     const canonicalUrl = getCanonicalUrl(canonicalPath, siteUrl);
-    const ogImageUrl = getOgImageUrl(siteUrl);
+    const ogImageUrl = getOgImageUrl(siteUrl, ogImagePath);
 
     updateOG('og:title', fullTitle);
     updateOG('og:description', description);
@@ -127,7 +129,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
     } else {
       document.getElementById('schema-org-jsonld')?.remove();
     }
-  }, [title, description, keywords, canonicalPath, schemaJson, robots]);
+  }, [title, description, keywords, canonicalPath, schemaJson, robots, ogImagePath]);
 
   return null;
 };

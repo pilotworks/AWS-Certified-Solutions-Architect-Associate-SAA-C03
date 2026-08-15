@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "data:generate": "bunx tsx scripts/generate-all-data.ts",
-    "build": "bunx tsx scripts/generate-all-data.ts && bunx tsc && bunx vite build && bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/prerender.ts",
-    "build:ssg": "bunx tsx scripts/generate-all-data.ts && bunx tsc && bunx vite build && bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/prerender.ts",
+    "build": "bunx tsx scripts/generate-all-data.ts && bunx tsx scripts/generate-og-images.ts && bunx tsc && bunx vite build && bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/prerender.ts",
+    "build:ssg": "bunx tsx scripts/generate-all-data.ts && bunx tsx scripts/generate-og-images.ts && bunx tsc && bunx vite build && bunx tsx scripts/generate-sitemap.ts && bunx tsx scripts/prerender.ts",
     "generate:seo": "bunx tsx scripts/generate-sitemap.ts",
     "preview": "vite preview"
   },
