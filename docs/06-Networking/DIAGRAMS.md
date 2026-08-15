@@ -149,23 +149,23 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant Client
-    participant NACL as Network ACL (Subnet(
-    participant SG as Security Group (Instance(
+    participant NACL as Network ACL (Subnet)
+    participant SG as Security Group (Instance)
     participant EC2 as EC2 Instance
     
     Note over Client,EC2: Inbound Traffic
     
     Client->>NACL: Request on port 80
-    NACL->>NACL: Check Inbound Rules (stateless(
+    NACL->>NACL: Check Inbound Rules (stateless)
     NACL->>SG: Allow if rule matches
-    SG->>SG: Check Inbound Rules (stateful(
+    SG->>SG: Check Inbound Rules (stateful)
     SG->>EC2: Allow if rule matches
     
-    Note over Client,EC2: Response (Outbound from EC2(
+    Note over Client,EC2: Response (Outbound from EC2)
     
     EC2->>SG: Response
-    SG->>NACL: Auto-allow (stateful(
-    NACL->>NACL: Check Outbound Rules (stateless(
+    SG->>NACL: Auto-allow (stateful)
+    NACL->>NACL: Check Outbound Rules (stateless)
     NACL->>Client: Allow if rule matches
     
     Note over Client,EC2: Security Group remembers the request<br/>Network ACL does not
@@ -326,12 +326,12 @@ sequenceDiagram
     participant User
     participant Route53
     participant HealthCheck as Health Checker
-    participant Primary as Primary (us-east-1(
-    participant Secondary as Secondary (eu-west-1(
+    participant Primary as Primary (us-east-1)
+    participant Secondary as Secondary (eu-west-1)
     
-    loop Every 30 seconds (or 10s fast(
+    loop Every 30 seconds (or 10s fast)
         HealthCheck->>Primary: HTTP/HTTPS/TCP Check
-        Primary->>HealthCheck: 200 OK (Healthy(
+        Primary->>HealthCheck: 200 OK (Healthy)
     end
     
     User->>Route53: DNS Query for example.com
@@ -431,7 +431,7 @@ sequenceDiagram
     else Cache Miss
         Edge->>Origin: Request /images/logo.png
         Origin->>Edge: Return object + headers
-        Edge->>Edge: Cache object (TTL from headers(
+        Edge->>Edge: Cache object (TTL from headers)
         Edge->>User: Return object
     end
     
@@ -612,7 +612,7 @@ graph TB
     EC2 --> ENA["Elastic Network Adapter ENA<br/>Up to 100 Gbps"]
     EC2 --> IntelVF["Intel 82599 VF<br/>Up to 10 Gbps<br/>Legacy"]
     
-    ENA --> Features["Features:<br/>✅ Higher bandwidth<br/>✅ Higher PPS (packets per second[<br/>✅ Lower latency<br/>✅ Lower jitter<br/>✅ No additional cost"]
+    ENA --> Features["Features:<br/>✅ Higher bandwidth<br/>✅ Higher PPS ]packets per second)<br/>✅ Lower latency<br/>✅ Lower jitter<br/>✅ No additional cost"]
     
     ENA --> UseWith["Supported:<br/>• Most current gen instances<br/>• Some previous gen<br/>• Enabled by default on modern AMIs"]
     

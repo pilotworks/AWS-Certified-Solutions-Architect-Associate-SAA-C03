@@ -70,13 +70,13 @@ sequenceDiagram
     participant SNS
     participant ASG as Auto Scaling
     
-    Note over EC2,CW: Standard Metrics (5-min intervals, free(
+    Note over EC2,CW: Standard Metrics (5-min intervals, free)
     
     loop Every 5 minutes
-        EC2->>CW: Send Metrics (CPU, Network, Disk(
+        EC2->>CW: Send Metrics (CPU, Network, Disk)
     end
     
-    Note over EC2,CW: Detailed Monitoring (1-min intervals, paid(
+    Note over EC2,CW: Detailed Monitoring (1-min intervals, paid)
     
     loop Every 1 minute
         EC2->>CW: Send Detailed Metrics
@@ -87,7 +87,7 @@ sequenceDiagram
     Alarm->>Alarm: Threshold: CPU > 80% for 2 periods
     
     CW->>Alarm: CPU = 85%
-    Alarm->>Alarm: State: ALARM (was OK(
+    Alarm->>Alarm: State: ALARM (was OK)
     
     Alarm->>SNS: Send Notification
     SNS->>SNS: Email/SMS to Operations Team
@@ -98,7 +98,7 @@ sequenceDiagram
     Note over CW,Alarm: After scaling, CPU drops
     
     CW->>Alarm: CPU = 50%
-    Alarm->>Alarm: State: OK (was ALARM(
+    Alarm->>Alarm: State: OK (was ALARM)
     Alarm->>SNS: Send OK Notification
     
 ```
@@ -178,7 +178,7 @@ graph TB
         
         Q3["Response Time P99:<br/>stats avg, p99 @duration<br/>by bin 5m"]
         
-        Q4["Exception Patterns:<br/>parse @message /Exception: (?&lt;exception&gt;.*?[/<br/>stats count by exception"]
+        Q4["Exception Patterns:<br/>parse @message /Exception: ]?&lt;exception&gt;.*?)/<br/>stats count by exception"]
     end
     
     subgraph Visualization_Group["Visualization"]

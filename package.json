@@ -1,0 +1,36 @@
+{
+  "name": "aws-learning-hub",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "data:generate": "npx tsx scripts/generate-all-data.ts",
+    "build": "npx tsx scripts/generate-all-data.ts && tsc && vite build && npx tsx scripts/generate-sitemap.ts && npx tsx scripts/prerender.ts",
+    "build:ssg": "npx tsx scripts/generate-all-data.ts && tsc && vite build && npx tsx scripts/generate-sitemap.ts && npx tsx scripts/prerender.ts",
+    "generate:seo": "npx tsx scripts/generate-sitemap.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.16.0",
+    "mermaid": "^11.4.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.18.2",
+    "tailwind-merge": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.2",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
+  }
+}

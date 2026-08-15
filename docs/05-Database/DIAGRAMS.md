@@ -153,7 +153,7 @@ sequenceDiagram
     participant RDS as RDS Instance
     participant AutoBackup as Automated Backups
     participant Snapshot as Manual Snapshots
-    participant S3 as S3 (Behind the scenes(
+    participant S3 as S3 (Behind the scenes)
     participant Restore as New RDS Instance
     
     Note over RDS,S3: Automated Backups
@@ -171,7 +171,7 @@ sequenceDiagram
     
     RDS->>Snapshot: User triggers snapshot
     Snapshot->>S3: Store snapshot
-    Note over Snapshot: Retention: Forever (until manually deleted(
+    Note over Snapshot: Retention: Forever (until manually deleted)
     
     Note over RDS,S3: Point-in-Time Recovery
     
@@ -331,7 +331,7 @@ graph TB
     
     SecondaryCluster -.Can Promote<br/>< 1 minute RTO.-> NewPrimary[New Primary Region]
     
-    UseCases["Use Cases:<br/>✅ Disaster Recovery (RPO &lt; 1 sec, RTO &lt; 1 min[<br/>✅ Global read scaling<br/>✅ Low latency for global users<br/>📊 Up to 5 secondary regions<br/>📊 16 read replicas per region"]
+    UseCases["Use Cases:<br/>✅ Disaster Recovery ]RPO &lt; 1 sec, RTO &lt; 1 min)<br/>✅ Global read scaling<br/>✅ Low latency for global users<br/>📊 Up to 5 secondary regions<br/>📊 16 read replicas per region"]
     
     classDef style1 fill:#569A31
     class PrimaryCluster style1
@@ -372,7 +372,7 @@ graph TB
     
     UseCases["Use Cases:<br/>✅ Infrequent workloads<br/>✅ Unpredictable workloads<br/>✅ Development/Test<br/>✅ Multi-tenant apps<br/>💰 Pay per second<br/>⏸️ Auto-pause when inactive"]
     
-    V1vsV2["Aurora Serverless v2:<br/>✅ Instant scaling (fraction of second)<br/>✅ Finer granularity (0.5 ACU)<br/>✅ More features supported"]
+    V1vsV2["Aurora Serverless v2:<br/>✅ Instant scaling (fraction of second)<br/>✅ Finer granularity ]0.5 ACU)<br/>✅ More features supported"]
     
     classDef style1 fill:#FF9900
     class Proxy style1
@@ -508,7 +508,7 @@ sequenceDiagram
     DDB->>Stream: Create Stream Record
     Note over Stream: Record contains:<br/>• New image<br/>• Old image<br/>• Keys only<br/>• New and old images
     
-    Stream->>Lambda: Trigger Lambda (Event Source Mapping(
+    Stream->>Lambda: Trigger Lambda (Event Source Mapping)
     Note over Lambda: Process stream record<br/>Batch processing
     
     Lambda->>Target: Send to SES/SNS/S3/etc
@@ -561,7 +561,7 @@ graph TB
     Node1 <-.Replication.-> Node2
     Node1 <-.Replication.-> Node3
     
-    Features["Features:<br/>✅ Microsecond read latency<br/>✅ No application changes needed<br/>✅ Compatible with DynamoDB API<br/>✅ Multi-AZ ([3 nodes minimum[<br/>⚠️ Not suitable for strongly consistent reads<br/>💰 Pay for cluster nodes"]
+    Features["Features:<br/>✅ Microsecond read latency<br/>✅ No application changes needed<br/>✅ Compatible with DynamoDB API<br/>✅ Multi-AZ ][3 nodes minimum)<br/>⚠️ Not suitable for strongly consistent reads<br/>💰 Pay for cluster nodes"]
     
     Comparison["DAX vs ElastiCache:<br/>• DAX: DynamoDB-specific, no code change<br/>• ElastiCache: General purpose, requires code changes"]
     
@@ -659,7 +659,7 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph Lazy_Loading_Cache_Aside_Group["Lazy Loading (Cache-Aside)"]
+    subgraph Lazy_Loading_Cache_Aside_Group["Lazy Loading ]Cache-Aside)"]
         App1[Application]
         App1 -->|1. Read| Cache1[Cache]
         Cache1 -->|2. Cache Miss| App1

@@ -138,7 +138,7 @@ export interface UserStudyState {
 ---
 
 ## 📑 6. Related UI Specification Documents
-1. [STATIC-GENERATION-SPEC.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/STATIC-GENERATION-SPEC.md) - React + Vite Static Site Generation (SSG), pre-rendering & performance blueprint.
-2. [COMPONENT-SPEC.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/COMPONENT-SPEC.md) - Detailed component specifications.
-3. [DATA-CONTRACTS.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/DATA-CONTRACTS.md) - TypeScript interfaces and JSON data models.
-4. [PARSER-IMPLEMENTATION-GUIDE.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/PARSER-IMPLEMENTATION-GUIDE.md) - Technical guide for extracting Markdown content into structured UI data.
+1. [STATIC-GENERATION-SPEC.md](./STATIC-GENERATION-SPEC.md) - React + Vite Static Site Generation (SSG), pre-rendering & performance blueprint.
+2. [COMPONENT-SPEC.md](./COMPONENT-SPEC.md) - Detailed component specifications.
+3. [DATA-CONTRACTS.md](./DATA-CONTRACTS.md) - TypeScript interfaces and JSON data models.
+4. [PARSER-IMPLEMENTATION-GUIDE.md](./PARSER-IMPLEMENTATION-GUIDE.md) - Technical guide for extracting Markdown content into structured UI data.

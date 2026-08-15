@@ -1,0 +1,82 @@
+import React, { useEffect } from 'react';
+
+export interface PageHeadProps {
+  title: string;
+  description?: string;
+  keywords?: string[];
+  canonicalPath?: string;
+  schemaJson?: object;
+}
+
+export const PageHead: React.FC<PageHeadProps> = ({
+  title,
+  description = 'Complete self-paced preparation course covering all 14 AWS SAA-C03 domains, architectural patterns, and practice exams.',
+  keywords = ['AWS', 'SAA-C03', 'Solutions Architect', 'Cloud Architecture', 'AWS Certification'],
+  canonicalPath = '',
+  schemaJson,
+}) => {
+  useEffect(() => {
+    // 1. Update Title
+    const fullTitle = `${title} | AWS Solutions Architect Associate (SAA-C03) Hub`;
+    document.title = fullTitle;
+
+    // 2. Update Meta Description
+    let metaDesc = document.querySelector('meta[name="description"]') as HTMLMetaElement;
+    if (!metaDesc) {
+      metaDesc = document.createElement('meta');
+      metaDesc.name = 'description';
+      document.head.appendChild(metaDesc);
+    }
+    metaDesc.content = description;
+
+    // 3. Update Meta Keywords
+    let metaKeywords = document.querySelector('meta[name="keywords"]') as HTMLMetaElement;
+    if (!metaKeywords) {
+      metaKeywords = document.createElement('meta');
+      metaKeywords.name = 'keywords';
+      document.head.appendChild(metaKeywords);
+    }
+    metaKeywords.content = keywords.join(', ');
+
+    // 4. Update Open Graph Tags
+    const updateOG = (property: string, content: string) => {
+      let og = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement;
+      if (!og) {
+        og = document.createElement('meta');
+        og.setAttribute('property', property);
+        document.head.appendChild(og);
+      }
+      og.content = content;
+    };
+
+    const canonicalUrl = `https://aws-saa-c03.pilotworks.dev${canonicalPath || ''}`;
+
+    updateOG('og:title', fullTitle);
+    updateOG('og:description', description);
+    updateOG('og:url', canonicalUrl);
+    updateOG('og:type', 'website');
+
+    // Canonical link tag
+    let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
+    if (!linkCanonical) {
+      linkCanonical = document.createElement('link');
+      linkCanonical.rel = 'canonical';
+      document.head.appendChild(linkCanonical);
+    }
+    linkCanonical.href = canonicalUrl;
+
+    // 5. Update Schema.org JSON-LD Structured Data
+    if (schemaJson) {
+      let script = document.getElementById('schema-org-jsonld') as HTMLScriptElement;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = 'schema-org-jsonld';
+        script.type = 'application/ld+json';
+        document.head.appendChild(script);
+      }
+      script.textContent = JSON.stringify(schemaJson, null, 2);
+    }
+  }, [title, description, keywords, canonicalPath, schemaJson]);
+
+  return null;
+};

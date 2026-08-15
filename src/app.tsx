@@ -1,0 +1,191 @@
+import React, { useState } from 'react';
+import { BrowserRouter, MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ExternalLink } from 'lucide-react';
+import { MODULES_METADATA } from './data/modules-meta';
+import { ThemeProvider } from './context/theme-context';
+import { Header } from './components/layout/header';
+import { Sidebar } from './components/layout/sidebar';
+import { CommandPalette } from './components/search/command-palette';
+import { DashboardPage } from './pages/dashboard-page';
+import { ModuleDetailPage } from './pages/module-detail-page';
+import { ArchitecturePage } from './pages/architecture-page';
+import { ExamSimulatorPage } from './pages/exam-simulator-page';
+import { FlashcardsPage } from './pages/flashcards-page';
+import { CheatSheetsPage } from './pages/cheat-sheets-page';
+import { useProgress } from './hooks/use-progress';
+
+export function AppContent() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
+
+  const {
+    progress,
+    toggleModuleComplete,
+    markFlashcardMastered,
+    markFlashcardReview,
+    recordExamResult,
+    toggleBookmarkQuestion,
+    saveUserNote,
+  } = useProgress();
+
+  const overallProgressPercent = Math.round(
+    (progress.completedModules.length / MODULES_METADATA.length) * 100
+  );
+
+  return (
+    <div
+      className="min-h-screen flex flex-col antialiased transition-colors duration-200"
+      style={{
+        backgroundColor: 'var(--bg-page)',
+        color: 'var(--text-primary)',
+      }}
+    >
+      {/* Global Header */}
+      <Header
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        overallProgressPercent={overallProgressPercent}
+      />
+
+      {/* Main Layout Container */}
+      <div className="flex-1 flex pt-16">
+        {/* Left Sidebar */}
+        <Sidebar
+          completedModuleIds={progress.completedModules}
+          isOpen={isSidebarOpen}
+          onCloseMobile={() => setIsSidebarOpen(false)}
+        />
+
+        {/* Main Content Viewport */}
+        <main className="flex-1 lg:pl-72 flex flex-col min-w-0">
+          <div className="flex-1 pb-16">
+            <Routes>
+              {/* Dashboard & Roadmap */}
+              <Route
+                path="/"
+                element={
+                  <DashboardPage
+                    completedModuleIds={progress.completedModules}
+                    masteredFlashcardsCount={progress.masteredFlashcards.length}
+                  />
+                }
+              />
+              <Route
+                path="/modules"
+                element={
+                  <DashboardPage
+                    completedModuleIds={progress.completedModules}
+                    masteredFlashcardsCount={progress.masteredFlashcards.length}
+                  />
+                }
+              />
+
+              {/* Module Detail with Query Strings for Tabs */}
+              <Route
+                path="/modules/:id"
+                element={
+                  <ModuleDetailPage
+                    bookmarkedIds={progress.bookmarkedQuestions}
+                    onToggleBookmark={toggleBookmarkQuestion}
+                    userNotes={progress.userNotes}
+                    onSaveNote={saveUserNote}
+                  />
+                }
+              />
+
+              {/* Architecture Patterns Gallery with Vector Diagram Viewer */}
+              <Route path="/architecture" element={<ArchitecturePage />} />
+
+              {/* Exam Simulator with 130 min / 65 Questions */}
+              <Route
+                path="/exam-simulator"
+                element={<ExamSimulatorPage onSaveResult={recordExamResult} />}
+              />
+
+              {/* 3D Spaced-Repetition Flashcards */}
+              <Route
+                path="/flashcards"
+                element={
+                  <FlashcardsPage
+                    masteredIds={progress.masteredFlashcards}
+                    reviewIds={progress.reviewFlashcards}
+                    onMasterCard={markFlashcardMastered}
+                    onReviewCard={markFlashcardReview}
+                  />
+                }
+              />
+
+              {/* Decision Matrices & Exam Cheat Sheets */}
+              <Route path="/cheatsheets" element={<CheatSheetsPage />} />
+
+              {/* Fallback */}
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </div>
+
+          {/* Clean Modern Pro Footer */}
+          <footer
+            className="border-t py-6 px-6 text-xs font-mono transition-colors"
+            style={{
+              backgroundColor: 'var(--bg-card)',
+              borderColor: 'var(--border-subtle)',
+              color: 'var(--text-muted)',
+            }}
+          >
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+              <div>
+                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>
+                  AWS SAA-C03 Solutions Architect Learning & Exam Platform
+                </span>
+                <div className="mt-1 text-[11px] flex items-center justify-center md:justify-start gap-1.5 flex-wrap">
+                  <span>Source Knowledge Base:</span>
+                  <a
+                    href="https://github.com/ChathurangaVKD/AWS-Certified-Solutions-Architect-Associate-SAA-C03"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="inline-flex items-center gap-1 underline underline-offset-2 hover:opacity-80 transition-opacity font-medium"
+                    style={{ color: 'var(--text-accent)' }}
+                  >
+                    <span>ChathurangaVKD / AWS-SAA-C03</span>
+                    <ExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+                </div>
+              </div>
+              <div className="text-[11px] text-center md:text-right">
+                <span>Dark • Light • E-Reader Modes • 100% Offline Capable</span>
+              </div>
+            </div>
+          </footer>
+        </main>
+      </div>
+
+      {/* Global Command Palette Search (Cmd + K) */}
+      <CommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+      />
+    </div>
+  );
+}
+
+export function ServerApp({ initialUrl = '/' }: { initialUrl?: string }) {
+  return (
+    <ThemeProvider>
+      <MemoryRouter initialEntries={[initialUrl]}>
+        <AppContent />
+      </MemoryRouter>
+    </ThemeProvider>
+  );
+}
+
+export function App() {
+  return (
+    <ThemeProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </ThemeProvider>
+  );
+}
+
+export default App;

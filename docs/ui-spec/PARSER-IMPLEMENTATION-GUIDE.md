@@ -1,6 +1,6 @@
 # ⚙️ AWS Learning Hub - Markdown Parser Implementation Guide
 
-> **Parent Spec**: [UI-ARCHITECTURE-SPEC.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/UI-ARCHITECTURE-SPEC.md)  
+> **Parent Spec**: [UI-ARCHITECTURE-SPEC.md](./UI-ARCHITECTURE-SPEC.md)  
 > **Status**: Ready for Implementation  
 
 This guide provides algorithms and TypeScript implementation examples for parsing the existing Markdown files into structured JSON data models for the web UI components.

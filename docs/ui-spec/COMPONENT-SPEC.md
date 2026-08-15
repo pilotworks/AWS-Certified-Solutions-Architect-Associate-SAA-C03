@@ -1,6 +1,6 @@
 # 🧩 AWS Learning Hub - UI Component Specification
 
-> **Parent Spec**: [UI-ARCHITECTURE-SPEC.md](file:///Users/tienpham/Work/entj-pham/aws-learning/docs/ui-spec/UI-ARCHITECTURE-SPEC.md)  
+> **Parent Spec**: [UI-ARCHITECTURE-SPEC.md](./UI-ARCHITECTURE-SPEC.md)  
 > **Status**: Ready for Implementation  
 
 ---

@@ -1,0 +1,109 @@
+[
+  {
+    "id": "ha-3-tier-web-app",
+    "title": "Multi-AZ 3-Tier Highly Available Web Application",
+    "patternType": "MultiTier",
+    "domain": "Architecture",
+    "scenario": "A company needs to host a mission-critical web application with zero single points of failure across multiple Availability Zones, automated scaling during traffic spikes, and isolated database tier.",
+    "rtoRequirement": "< 1 minute (Automatic failover)",
+    "rpoRequirement": "0 (Synchronous Multi-AZ DB replication)",
+    "recommendedServices": ["Amazon Route 53", "Application Load Balancer", "Amazon EC2 Auto Scaling", "Amazon Aurora Multi-AZ", "AWS WAF"],
+    "tradeoffs": {
+      "cost": "Medium",
+      "complexity": "Moderate",
+      "scalability": "Auto-Scaling"
+    },
+    "keyTakeaways": [
+      "ALB distributes incoming HTTPS traffic across EC2 instances in multiple AZs.",
+      "Public subnets only contain Load Balancer and NAT Gateways; EC2 instances live in Private subnets.",
+      "Amazon Aurora replicates 6 storage copies across 3 AZs with automatic sub-30s failover."
+    ],
+    "diagramMermaid": "graph TD\n    User[\"Global Users\"] --> WAF[\"AWS WAF\"]\n    WAF --> R53[\"Route 53 DNS\"]\n    R53 --> ALB[\"Application Load Balancer\"]\n\n    subgraph VPC[\"AWS VPC (Multi-AZ)\"]\n        subgraph AZ_A[\"Availability Zone A\"]\n            ALB_A[\"ALB Node A\"]\n            NAT_A[\"NAT Gateway A\"]\n            EC2_A[\"EC2 Web/App Instance\"]\n            DB_Primary[(\"Aurora Primary DB\")]\n        end\n\n        subgraph AZ_B[\"Availability Zone B\"]\n            ALB_B[\"ALB Node B\"]\n            NAT_B[\"NAT Gateway B\"]\n            EC2_B[\"EC2 Web/App Instance\"]\n            DB_Replica[(\"Aurora Read Replica\")]\n        end\n    end\n\n    ALB --> ALB_A\n    ALB --> ALB_B\n    ALB_A --> EC2_A\n    ALB_B --> EC2_B\n    EC2_A --> DB_Primary\n    EC2_B --> DB_Primary\n    DB_Primary -.->|Auto Replication| DB_Replica"
+  },
+  {
+    "id": "serverless-event-driven",
+    "title": "Serverless Event-Driven Microservices Architecture",
+    "patternType": "Serverless",
+    "domain": "Integration",
+    "scenario": "An e-commerce platform needs to process high volume customer orders, execute asynchronous validation, process payments, and notify logistics partners with zero server management and pay-per-use billing.",
+    "rtoRequirement": "Real-time self-healing",
+    "rpoRequirement": "0 (DynamoDB Multi-AZ durability)",
+    "recommendedServices": ["Amazon API Gateway", "AWS Lambda", "Amazon DynamoDB", "Amazon EventBridge", "Amazon SQS"],
+    "tradeoffs": {
+      "cost": "Low",
+      "complexity": "Simple",
+      "scalability": "Virtually Unlimited"
+    },
+    "keyTakeaways": [
+      "API Gateway provides low-latency REST endpoints with built-in throttling and Cognito authentication.",
+      "Lambda scales instantly to zero without idle server cost.",
+      "EventBridge routes order events to decoupled consumers (Payment, Inventory, Notification) asynchronously.",
+      "SQS Dead-Letter Queues (DLQ) capture failed events for retry and auditing."
+    ],
+    "diagramMermaid": "graph LR\n    Client[\"Web / Mobile Client\"] --> APIGW[\"API Gateway\"]\n    APIGW --> OrderFn[\"Order Processing Lambda\"]\n    OrderFn --> OrdersTable[(\"DynamoDB Orders Table\")]\n    OrderFn --> Bus[\"Amazon EventBridge Event Bus\"]\n\n    subgraph EventConsumers[\"Decoupled Event Consumers\"]\n        Bus -->|OrderPlaced| PayQueue[\"Payment SQS\"]\n        PayQueue --> PayFn[\"Payment Lambda\"]\n\n        Bus -->|OrderPlaced| InvQueue[\"Inventory SQS\"]\n        InvQueue --> InvFn[\"Inventory Lambda\"]\n\n        Bus -->|OrderPaid| NotifyFn[\"Customer Notification Lambda\"]\n        NotifyFn --> SNS[\"Amazon SNS / SES\"]\n    end\n\n    PayQueue -.->|DLQ on failure| DLQ[(\"Dead Letter Queue\")]"
+  },
+  {
+    "id": "dr-warm-standby-global",
+    "title": "Disaster Recovery: Warm Standby with Route 53 & Aurora Global Database",
+    "patternType": "HA_DR",
+    "domain": "Architecture",
+    "scenario": "A financial services enterprise requires cross-region disaster recovery for catastrophic regional outages with RTO < 5 minutes and RPO < 1 second.",
+    "rtoRequirement": "< 5 minutes",
+    "rpoRequirement": "< 1 second",
+    "recommendedServices": ["Route 53 Health Checks & Failover", "Amazon Aurora Global Database", "S3 Cross-Region Replication (CRR)", "AWS Backup"],
+    "tradeoffs": {
+      "cost": "High",
+      "complexity": "Complex",
+      "scalability": "Auto-Scaling"
+    },
+    "keyTakeaways": [
+      "Aurora Global Database uses dedicated storage-level replication (< 1s latency) without database compute load.",
+      "Secondary region maintains a scaled-down fleet of EC2/ECS instances (Warm Standby) ready to auto-scale immediately.",
+      "Route 53 Active-Passive DNS failover automatically reroutes global traffic upon primary health check failure."
+    ],
+    "diagramMermaid": "graph TD\n    Users[\"Global Users\"] --> R53[\"Route 53 DNS Failover\"]\n\n    subgraph PrimaryRegion[\"Primary Region (us-east-1) - ACTIVE\"]\n        ALB_Pri[\"Primary ALB\"]\n        ASG_Pri[\"Full Scale Auto Scaling Group\"]\n        Aurora_Pri[(\"Aurora Global Primary DB\")]\n        S3_Pri[\"Primary S3 Bucket\"]\n    end\n\n    subgraph SecondaryRegion[\"Secondary Region (us-west-2) - WARM STANDBY\"]\n        ALB_Sec[\"Standby ALB\"]\n        ASG_Sec[\"Scaled-Down Standby ASG\"]\n        Aurora_Sec[(\"Aurora Global Secondary DB\")]\n        S3_Sec[\"Replica S3 Bucket\"]\n    end\n\n    R53 -->|Health Check OK - Primary| ALB_Pri\n    R53 -.->|Failover| ALB_Sec\n\n    ALB_Pri --> ASG_Pri\n    ASG_Pri --> Aurora_Pri\n    ALB_Sec --> ASG_Sec\n    ASG_Sec --> Aurora_Sec\n\n    Aurora_Pri ==>|Fast Storage Replication| Aurora_Sec\n    S3_Pri ==>|S3 CRR| S3_Sec"
+  },
+  {
+    "id": "decoupled-async-fanout",
+    "title": "Decoupled Asynchronous Fanout Architecture (SNS + SQS)",
+    "patternType": "Decoupled",
+    "domain": "Integration",
+    "scenario": "An image processing application receives user uploads that must be concurrently resized, analyzed for content moderation, watermarked, and archived without blocking user requests.",
+    "rtoRequirement": "Self-recovering buffer",
+    "rpoRequirement": "0 (SQS Persistent queue)",
+    "recommendedServices": ["Amazon S3", "Amazon SNS", "Amazon SQS", "AWS Lambda", "Amazon Rekognition"],
+    "tradeoffs": {
+      "cost": "Low",
+      "complexity": "Simple",
+      "scalability": "Virtually Unlimited"
+    },
+    "keyTakeaways": [
+      "S3 triggers SNS Topic upon PutObject upload.",
+      "SNS Fans out the event to multiple independent SQS Queues simultaneously.",
+      "Each worker queue processes at its own pace without affecting other pipelines.",
+      "Loose coupling protects downstream systems from traffic spikes."
+    ],
+    "diagramMermaid": "graph LR\n    User[\"User App\"] -->|Upload Image| S3[\"Amazon S3 Bucket\"]\n    S3 -->|S3 Event Notification| SNS[\"Amazon SNS Topic\"]\n\n    SNS -->|Fanout Message| Q1[\"Resize SQS Queue\"]\n    SNS -->|Fanout Message| Q2[\"Moderation SQS Queue\"]\n    SNS -->|Fanout Message| Q3[\"Watermark SQS Queue\"]\n\n    Q1 --> L1[\"Resize Lambda Worker\"]\n    L1 --> S3_Thumb[\"S3 Thumbnails\"]\n    Q2 --> L2[\"Rekognition Lambda Worker\"]\n    L2 --> DynamoDB[(\"Safety Log DB\")]\n    Q3 --> L3[\"Watermark Lambda Worker\"]\n    L3 --> S3_Watermarked[\"S3 Watermarked\"]"
+  },
+  {
+    "id": "hybrid-transit-gateway",
+    "title": "Enterprise Hybrid Cloud Networking with AWS Transit Gateway",
+    "patternType": "HybridNetwork",
+    "domain": "Networking",
+    "scenario": "An enterprise needs to connect on-premises data centers to dozens of AWS VPCs (Production, Development, Shared Services) with centralized routing, transitive VPC-to-VPC communication, and centralized Internet egress.",
+    "rtoRequirement": "Sub-second BGP failover",
+    "rpoRequirement": "N/A (Network connectivity)",
+    "recommendedServices": ["AWS Transit Gateway", "AWS Direct Connect", "AWS Site-to-Site VPN", "Network Firewall", "Route 53 Resolver"],
+    "tradeoffs": {
+      "cost": "Medium",
+      "complexity": "Complex",
+      "scalability": "Auto-Scaling"
+    },
+    "keyTakeaways": [
+      "AWS Transit Gateway replaces full-mesh VPC Peering with a hub-and-spoke star topology.",
+      "Supports transitive routing between On-Premises, VPCs, and Centralized Inspection VPCs.",
+      "AWS Direct Connect with VPN backup provides high-speed dedicated hybrid connectivity with automatic failover."
+    ],
+    "diagramMermaid": "graph TD\n    subgraph OnPrem[\"On-Premises Data Center\"]\n        Router[\"Corporate Edge Router\"]\n    end\n\n    subgraph AWSCloud[\"AWS Global Cloud\"]\n        TGW[\"AWS Transit Gateway (Hub & Spoke Router)\"]\n\n        subgraph ProdVPC[\"Production VPC\"]\n            ProdAttach[\"VPC Attachment\"] --> ProdEC2[\"Production Workloads\"]\n        end\n\n        subgraph DevVPC[\"Development VPC\"]\n            DevAttach[\"VPC Attachment\"] --> DevEC2[\"Development Workloads\"]\n        end\n\n        subgraph SharedVPC[\"Centralized Security & Egress VPC\"]\n            SharedAttach[\"VPC Attachment\"] --> FW[\"AWS Network Firewall\"]\n            FW --> NAT[\"NAT Gateway\"]\n            NAT --> IGW[\"Internet Gateway\"]\n        end\n    end\n\n    Router ==>|Direct Connect| TGW\n    Router -.->|VPN Backup| TGW\n\n    TGW <--> ProdAttach\n    TGW <--> DevAttach\n    TGW <--> SharedAttach"
+  }
+]

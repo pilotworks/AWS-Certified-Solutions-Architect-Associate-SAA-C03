@@ -283,25 +283,25 @@ sequenceDiagram
 
 ```mermaid
 graph TB
-    subgraph Application_Load_Balancer_ALB_Group["Application Load Balancer (ALB)"]
+    subgraph Application_Load_Balancer_ALB_Group["Application Load Balancer ]ALB)"]
         ALB["Layer 7 - HTTP/HTTPS"]
         ALB --> ALBFeatures["• Path-based routing<br/>• Host-based routing<br/>• Lambda targets<br/>• WebSocket support<br/>• HTTP/2 support"]
         ALBFeatures --> ALBUse["Microservices<br/>Containers<br/>Web Applications"]
     end
     
-    subgraph Network_Load_Balancer_NLB_Group["Network Load Balancer (NLB)"]
+    subgraph Network_Load_Balancer_NLB_Group["Network Load Balancer ]NLB)"]
         NLB["Layer 4 - TCP/UDP/TLS"]
         NLB --> NLBFeatures["• Ultra-high performance<br/>• Static IP addresses<br/>• Preserve source IP<br/>• Millions of req/sec"]
         NLBFeatures --> NLBUse["Gaming<br/>IoT<br/>TCP/UDP traffic"]
     end
     
-    subgraph Gateway_Load_Balancer_GWLB_Group["Gateway Load Balancer (GWLB)"]
+    subgraph Gateway_Load_Balancer_GWLB_Group["Gateway Load Balancer ]GWLB)"]
         GWLB[Layer 3 - IP Packets]
         GWLB --> GWLBFeatures["• Deploy virtual appliances<br/>• Transparent to applications<br/>• GENEVE protocol"]
         GWLBFeatures --> GWLBUse["Firewalls<br/>IDS/IPS<br/>Deep packet inspection"]
     end
     
-    subgraph Classic_Load_Balancer_CLB_Group["Classic Load Balancer (CLB)"]
+    subgraph Classic_Load_Balancer_CLB_Group["Classic Load Balancer ]CLB)"]
         CLB[Layer 4 & 7 - Legacy]
         CLB --> CLBNote["❌ Not recommended<br/>For new applications"]
     end

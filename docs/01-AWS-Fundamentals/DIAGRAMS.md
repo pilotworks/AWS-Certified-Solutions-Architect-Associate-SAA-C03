@@ -228,7 +228,7 @@ graph TB
 
 ```mermaid
 graph TB
-    subgraph Customer_Responsibility_br_Security_IN_the_Cloud_Group["Customer Responsibility&lt;&lt;&lt;BRTAG&gt;&gt;&gt;(Security IN the Cloud)"]
+    subgraph Customer_Responsibility_br_Security_IN_the_Cloud_Group["Customer Responsibility&lt;&lt;&lt;BRTAG&gt;&gt;&gt;]Security IN the Cloud)"]
         C1[Customer Data]
         C2[Platform, Applications, IAM]
         C3["Operating System, Network,<br/>Firewall Configuration"]
@@ -237,7 +237,7 @@ graph TB
         C6[Network Traffic Protection]
     end
     
-    subgraph AWS_Responsibility_br_Security_OF_the_Cloud_Group["AWS Responsibility&lt;&lt;&lt;BRTAG&gt;&gt;&gt;(Security OF the Cloud)"]
+    subgraph AWS_Responsibility_br_Security_OF_the_Cloud_Group["AWS Responsibility&lt;&lt;&lt;BRTAG&gt;&gt;&gt;]Security OF the Cloud)"]
         A1["Hardware/AWS Global Infrastructure"]
         A2[Regions, AZs, Edge Locations]
         A3["Compute, Storage, Database,<br/>Networking"]
@@ -268,19 +268,19 @@ graph TB
 
 ```mermaid
 graph LR
-    subgraph Infrastructure_Services_EC2_EBS_VPC_Group["Infrastructure Services (EC2, EBS, VPC)"]
+    subgraph Infrastructure_Services_EC2_EBS_VPC_Group["Infrastructure Services ]EC2, EBS, VPC)"]
         direction TB
         I1["Customer Manages:<br/>• OS Patching<br/>• Security Groups<br/>• Network Config<br/>• Application Security"]
         I2["AWS Manages:<br/>• Infrastructure<br/>• Virtualization Layer"]
     end
     
-    subgraph Container_Services_RDS_EMR_Group["Container Services (RDS, EMR)"]
+    subgraph Container_Services_RDS_EMR_Group["Container Services ]RDS, EMR)"]
         direction TB
         Co1["Customer Manages:<br/>• Security Groups<br/>• IAM<br/>• Data Encryption"]
         Co2["AWS Manages:<br/>• OS Patching<br/>• Database Patching<br/>• Infrastructure"]
     end
     
-    subgraph Abstracted_Services_S3_DynamoDB_Group["Abstracted Services (S3, DynamoDB)"]
+    subgraph Abstracted_Services_S3_DynamoDB_Group["Abstracted Services ]S3, DynamoDB)"]
         direction TB
         A1["Customer Manages:<br/>• IAM<br/>• Data Encryption<br/>• Client-Side Protection"]
         A2["AWS Manages:<br/>• Infrastructure<br/>• Platform<br/>• Operating System"]
@@ -604,7 +604,7 @@ graph TB
         
         subgraph AZ_us_east_1b_Group["AZ: us-east-1b"]
             App2[Application Server 2]
-            DB2["(Standby Database<br/>Sync Replication)"]
+            DB2["]Standby Database<br/>Sync Replication)"]
         end
         
         subgraph AZ_us_east_1c_Group["AZ: us-east-1c"]

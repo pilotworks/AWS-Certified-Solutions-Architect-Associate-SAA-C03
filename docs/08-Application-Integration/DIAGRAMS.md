@@ -40,15 +40,15 @@ sequenceDiagram
     participant Consumer2 as Consumer 2
     
     Producer->>SQS: SendMessage
-    SQS->>SQS: Store message (retention: 4 days default(
+    SQS->>SQS: Store message (retention: 4 days default)
     
     Consumer1->>SQS: ReceiveMessage
     SQS->>Consumer1: Return message
-    SQS->>SQS: Start Visibility Timeout (30s default(
+    SQS->>SQS: Start Visibility Timeout (30s default)
     Note over SQS: Message invisible to other consumers
     
     Consumer2->>SQS: ReceiveMessage
-    SQS->>Consumer2: No messages (invisible(
+    SQS->>Consumer2: No messages (invisible)
     
     alt Processing Success
         Consumer1->>Consumer1: Process message
@@ -115,21 +115,21 @@ sequenceDiagram
     participant Consumer
     participant SQS as SQS Queue
     
-    Note over Consumer,SQS: Short Polling (ReceiveMessageWaitTimeSeconds = 0(
+    Note over Consumer,SQS: Short Polling (ReceiveMessageWaitTimeSeconds = 0)
     
     loop Every second
         Consumer->>SQS: ReceiveMessage
-        SQS->>Consumer: Empty response (if no messages(
+        SQS->>Consumer: Empty response (if no messages)
         Note over Consumer: API call cost incurred
     end
     
-    Note over Consumer,SQS: Long Polling (ReceiveMessageWaitTimeSeconds = 1-20(
+    Note over Consumer,SQS: Long Polling (ReceiveMessageWaitTimeSeconds = 1-20)
     
-    Consumer->>SQS: ReceiveMessage (wait up to 20s(
+    Consumer->>SQS: ReceiveMessage (wait up to 20s)
     Note over SQS: Wait for messages to arrive
     
     alt Messages arrive within wait time
-        SQS->>Consumer: Return messages (1-10 messages(
+        SQS->>Consumer: Return messages (1-10 messages)
     else No messages within wait time
         SQS->>Consumer: Empty response after 20s
     end
@@ -293,7 +293,7 @@ graph TB
         PartnerBus --> Rules
     end
     
-    subgraph Targets_18_AWS_Services_Group["Targets (18+ AWS Services)"]
+    subgraph Targets_18_AWS_Services_Group["Targets ]18+ AWS Services)"]
         Lambda["Lambda Functions"]
         SQS[SQS Queues]
         SNS[SNS Topics]
@@ -362,7 +362,7 @@ sequenceDiagram
 
 ```mermaid
 graph TB
-    subgraph CloudWatch_Events_Legacy_Group["CloudWatch Events (Legacy)"]
+    subgraph CloudWatch_Events_Legacy_Group["CloudWatch Events ]Legacy)"]
         CWE["CloudWatch Events"]
         CWE_Features["• AWS services only<br/>• Default event bus<br/>• Basic filtering<br/>• 5 targets per rule"]
     end
@@ -374,7 +374,7 @@ graph TB
     
     CWE -.Evolved into.-> EB
     
-    Recommendation["Recommendation:<br/>✅ Use EventBridge for new applications<br/>✅ CloudWatch Events still works (same API)<br/>✅ EventBridge is superset of CW Events"]
+    Recommendation["Recommendation:<br/>✅ Use EventBridge for new applications<br/>✅ CloudWatch Events still works ]same API)<br/>✅ EventBridge is superset of CW Events"]
     
     classDef style1 fill:#FF9900
     class EB style1

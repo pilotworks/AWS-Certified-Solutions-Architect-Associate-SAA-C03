@@ -206,7 +206,7 @@ graph TB
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Standard: Upload ([[Day 0(
+    [*] --> Standard: Upload ([)Day 0)
     
     Standard --> StandardIA: After 30 days<br/>Transition
     
@@ -431,21 +431,21 @@ sequenceDiagram
     Note over Resources: Services consuming costs
     
     Resources->>Budgets: Cost accumulates
-    Budgets->>Budgets: 80% of budget ($8,000(
+    Budgets->>Budgets: 80% of budget ($8,000)
     
     Budgets->>SNS: Alert: 80% threshold
     SNS->>User: Email notification
     
     Note over Resources: Costs continue
     
-    Resources->>Budgets: 100% of budget ($10,000(
+    Resources->>Budgets: 100% of budget ($10,000)
     Budgets->>SNS: Alert: 100% threshold
     SNS->>User: Email + SMS
     SNS->>Lambda: Trigger remediation
     
     Lambda->>Resources: Stop non-prod instances<br/>Reduce Auto Scaling
     
-    Resources->>Budgets: 110% of budget ($11,000(
+    Resources->>Budgets: 110% of budget ($11,000)
     Budgets->>SNS: Critical alert
     SNS->>User: Email + SMS + Slack
     

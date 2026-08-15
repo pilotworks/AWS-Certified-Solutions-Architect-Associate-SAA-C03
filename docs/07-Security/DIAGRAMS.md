@@ -50,9 +50,9 @@ sequenceDiagram
     participant KMS as AWS KMS
     participant S3 as Amazon S3
     
-    Note over App,S3: Encrypt Large File (&gt; 4 KB(
+    Note over App,S3: Encrypt Large File (&gt; 4 KB)
     
-    App->>KMS: GenerateDataKey(CMK(
+    App->>KMS: GenerateDataKey(CMK)
     KMS->>KMS: Generate Data Key
     KMS->>App: Return Plaintext Data Key + Encrypted Data Key
     
@@ -63,7 +63,7 @@ sequenceDiagram
     Note over App,S3: Decrypt File
     
     S3->>App: Download Encrypted File + Encrypted Data Key
-    App->>KMS: Decrypt(Encrypted Data Key(
+    App->>KMS: Decrypt(Encrypted Data Key)
     KMS->>App: Return Plaintext Data Key
     App->>App: Decrypt file with Plaintext Data Key
     App->>App: Delete Plaintext Data Key from memory
@@ -187,14 +187,14 @@ sequenceDiagram
     Note over SM: Rotation interval: 30 days
     
     SM->>Lambda: Trigger rotation
-    Lambda->>SM: CreateSecret (new password(
+    Lambda->>SM: CreateSecret (new password)
     Lambda->>RDS: Create new user credentials
     RDS->>Lambda: Success
-    Lambda->>SM: SetSecret (update with new password(
+    Lambda->>SM: SetSecret (update with new password)
     Lambda->>RDS: Test new credentials
     RDS->>Lambda: Connection successful
-    Lambda->>SM: FinishSecret (mark as current(
-    SM->>Lambda: DeleteSecret (old version after grace period(
+    Lambda->>SM: FinishSecret (mark as current)
+    SM->>Lambda: DeleteSecret (old version after grace period)
     
     Note over App,RDS: Application automatically gets new credentials
     
@@ -509,7 +509,7 @@ stateDiagram-v2
     Email --> Issued: Click email link
     
     Issued --> InUse: Associate with resource
-    InUse --> AutoRenew: Auto-renewal (60 days before expiry(
+    InUse --> AutoRenew: Auto-renewal (60 days before expiry)
     AutoRenew --> InUse: Renewed
     
     InUse --> Revoked: Revoke Certificate

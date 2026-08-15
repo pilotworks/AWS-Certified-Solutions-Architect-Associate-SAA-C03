@@ -481,7 +481,7 @@ sequenceDiagram
 
 ```mermaid
 graph TB
-    subgraph Account_A_Development_111111111111_Group["Account A - Development (111111111111)"]
+    subgraph Account_A_Development_111111111111_Group["Account A - Development ]111111111111)"]
         DevUser[Developer User]
         DevGroup[Developers Group]
         AssumePolicy["Assume Role Policy<br/>sts:AssumeRole"]
@@ -490,7 +490,7 @@ graph TB
         DevGroup --> AssumePolicy
     end
     
-    subgraph Account_B_Production_222222222222_Group["Account B - Production (222222222222)"]
+    subgraph Account_B_Production_222222222222_Group["Account B - Production ]222222222222)"]
         ProdRole[Production-ReadOnly-Role]
         TrustPolicy["Trust Policy:<br/>Trust Account 111111111111"]
         PermPolicy["Permission Policy:<br/>S3 Read, EC2 Describe"]
@@ -623,7 +623,7 @@ graph TB
         
         UserPolicy["User Policy:&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: EC2:*&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: S3:*&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: Lambda:*&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• All Regions"]
         
-        Result["Effective Permission:&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: EC2:* (us-east-1)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: S3:* (us-east-1)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;❌ No RDS (not in user policy)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;❌ No Lambda (not in boundary)"]
+        Result["Effective Permission:&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: EC2:* (us-east-1)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;• Allow: S3:* (us-east-1)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;❌ No RDS (not in user policy)&lt;&lt;&lt;BRTAG&gt;&gt;&gt;❌ No Lambda ]not in boundary)"]
     end
     
     Boundary -.AND.-> Result

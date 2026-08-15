@@ -112,29 +112,29 @@ graph TB
 ```mermaid
 sequenceDiagram
     participant User
-    participant S3 as S3 Bucket (Versioning Enabled(
+    participant S3 as S3 Bucket (Versioning Enabled)
     
-    User->>S3: PUT file.txt (First Upload(
+    User->>S3: PUT file.txt (First Upload)
     S3->>S3: Create Version ID: v1
-    S3->>User: Success (Version: v1(
+    S3->>User: Success (Version: v1)
     
-    User->>S3: PUT file.txt (Update(
+    User->>S3: PUT file.txt (Update)
     S3->>S3: Create Version ID: v2
     Note over S3: Previous version v1 kept
-    S3->>User: Success (Version: v2(
+    S3->>User: Success (Version: v2)
     
-    User->>S3: PUT file.txt (Update Again(
+    User->>S3: PUT file.txt (Update Again)
     S3->>S3: Create Version ID: v3
     Note over S3: Versions v1 and v2 kept
-    S3->>User: Success (Version: v3(
+    S3->>User: Success (Version: v3)
     
     User->>S3: DELETE file.txt
-    S3->>S3: Add Delete Marker (v4(
+    S3->>S3: Add Delete Marker (v4)
     Note over S3: All versions still exist
-    S3->>User: Success (Delete Marker(
+    S3->>User: Success (Delete Marker)
     
     User->>S3: GET file.txt
-    S3->>User: 404 Not Found (Delete Marker(
+    S3->>User: 404 Not Found (Delete Marker)
     
     User->>S3: DELETE Delete Marker
     S3->>User: Success - File Restored
@@ -164,7 +164,7 @@ graph LR
     
     SourceBucket -->|Cross-Region Replication<br/>CRR| DestBucket
     
-    Requirements["Requirements:<br/>✅ Versioning enabled on both<br/>✅ IAM role for replication<br/>✅ Different regions (CRR)<br/>✅ Same region (SRR)"]
+    Requirements["Requirements:<br/>✅ Versioning enabled on both<br/>✅ IAM role for replication<br/>✅ Different regions (CRR)<br/>✅ Same region ]SRR)"]
     
     UseCases["Use Cases:<br/>• Compliance<br/>• Lower latency<br/>• Disaster recovery<br/>• Replication across accounts"]
     
@@ -564,7 +564,7 @@ graph TB
     
     Volume --> Stored["Stored Volumes<br/>💾 Primary data on-premises<br/>☁️ Async backup to S3<br/>📦 Up to 32 volumes<br/>📊 16 TiB each"]
     
-    Gateway --> Tape["Tape Gateway<br/>📼 Virtual Tape Library (VTL)<br/>☁️ Backup to S3 & Glacier<br/>✅ Works with backup software<br/>Use: Backup & archive"]
+    Gateway --> Tape["Tape Gateway<br/>📼 Virtual Tape Library ]VTL)<br/>☁️ Backup to S3 & Glacier<br/>✅ Works with backup software<br/>Use: Backup & archive"]
     
     S3File --> S3[Amazon S3]
     FSx --> FSxService[Amazon FSx]
@@ -658,10 +658,10 @@ sequenceDiagram
     participant S3 as Amazon S3
     
     Customer->>AWS: 1. Request Snow device via Console
-    AWS->>Customer: 2. Ship device (encrypted(
+    AWS->>Customer: 2. Ship device (encrypted)
     Customer->>Device: 3. Connect to local network
     Customer->>Device: 4. Install Snowball client
-    Customer->>Device: 5. Copy data (days/weeks(
+    Customer->>Device: 5. Copy data (days/weeks)
     Note over Device: Data encrypted automatically
     Customer->>AWS: 6. Ship device back
     AWS->>Device: 7. Receive at AWS facility
