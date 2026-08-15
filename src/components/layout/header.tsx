@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({
     >
       <div className="flex items-center justify-between px-4 lg:px-6 h-full gap-3">
         {/* Left Side: Mobile Menu Button & App Brand */}
-        <div className="flex items-center gap-3">
+        <div className="flex min-w-0 items-center gap-3">
           <button
             onClick={onToggleSidebar}
             className="lg:hidden p-2 rounded-lg transition-colors"
@@ -41,15 +41,15 @@ export const Header: React.FC<HeaderProps> = ({
             <Menu className="w-5 h-5" />
           </button>
 
-          <Link to="/" className="flex items-center gap-2.5 cursor-pointer group">
+          <Link to="/" className="flex min-w-0 items-center gap-2.5 cursor-pointer group">
             <img
               src={`${import.meta.env.BASE_URL}icons/icon-192.svg`}
               alt="AWS SAA-C03 Hub"
               className="w-9 h-9 rounded-xl shadow-sm transition-transform group-hover:scale-105"
             />
-            <div>
+            <div className="hidden min-w-0 max-w-[105px] sm:block sm:max-w-none">
               <div
-                className="font-extrabold text-sm md:text-base tracking-tight flex items-center gap-1.5"
+                className="flex items-center gap-1.5 truncate whitespace-nowrap font-extrabold text-sm tracking-tight md:text-base"
                 style={{ color: 'var(--text-primary)' }}
               >
                 SAA-C03 Hub

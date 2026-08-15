@@ -90,7 +90,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
-            className="w-full bg-transparent focus:outline-none text-sm md:text-base font-medium"
+            className="w-full bg-transparent focus:outline-none text-base font-medium"
             style={{ color: 'var(--text-primary)' }}
           />
           <button

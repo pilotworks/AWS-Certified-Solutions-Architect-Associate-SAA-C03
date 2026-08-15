@@ -144,7 +144,7 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
             onChange={(e) => setNote(e.target.value)}
             placeholder={`Write your personal takeaways, memory tips, or exam traps for ${moduleTitle} (Markdown supported)...`}
             rows={10}
-            className="w-full p-4 rounded-xl text-xs font-mono transition-colors resize-y leading-relaxed outline-none border focus:ring-1"
+            className="w-full p-4 rounded-xl text-base md:text-xs font-mono transition-colors resize-y leading-relaxed outline-none border focus:ring-1"
             style={{
               backgroundColor: 'var(--bg-elevated)',
               borderColor: 'var(--border-subtle)',

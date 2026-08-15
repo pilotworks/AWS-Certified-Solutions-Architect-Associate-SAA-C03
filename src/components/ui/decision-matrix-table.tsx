@@ -104,7 +104,7 @@ export const DecisionMatrixTable: React.FC<DecisionMatrixTableProps> = ({
             value={currentSearch}
             onChange={(e) => handleSearchInput(e.target.value)}
             placeholder="Search matrix items..."
-            className="w-full pl-9 pr-4 py-2 rounded-xl text-xs transition-colors focus:outline-none"
+            className="w-full pl-9 pr-4 py-2 rounded-xl text-base md:text-xs transition-colors focus:outline-none"
             style={{
               backgroundColor: 'var(--bg-elevated)',
               borderColor: 'var(--border-subtle)',
