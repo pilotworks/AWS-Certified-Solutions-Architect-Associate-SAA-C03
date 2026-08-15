@@ -42,12 +42,11 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           <Link to="/" className="flex items-center gap-2.5 cursor-pointer group">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center font-black text-white shadow-sm transition-transform group-hover:scale-105"
-              style={{ backgroundColor: 'var(--text-accent)' }}
-            >
-              AWS
-            </div>
+            <img
+              src={`${import.meta.env.BASE_URL}icons/icon-192.svg`}
+              alt="AWS SAA-C03 Hub"
+              className="w-9 h-9 rounded-xl shadow-sm transition-transform group-hover:scale-105"
+            />
             <div>
               <div
                 className="font-extrabold text-sm md:text-base tracking-tight flex items-center gap-1.5"

@@ -1,0 +1,24 @@
+{
+  "name": "AWS SAA-C03 Architect Learning Hub",
+  "short_name": "SAA-C03 Hub",
+  "description": "Offline-first study hub for the AWS Solutions Architect Associate exam.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#090A0F",
+  "theme_color": "#090A0F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "icons/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

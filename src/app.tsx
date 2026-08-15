@@ -13,6 +13,7 @@ import { ExamSimulatorPage } from './pages/exam-simulator-page';
 import { FlashcardsPage } from './pages/flashcards-page';
 import { CheatSheetsPage } from './pages/cheat-sheets-page';
 import { useProgress } from './hooks/use-progress';
+import { OfflineStatus } from './components/pwa/offline-status';
 
 export function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -40,6 +41,7 @@ export function AppContent() {
         color: 'var(--text-primary)',
       }}
     >
+      <OfflineStatus />
       {/* Global Header */}
       <Header
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
