@@ -7,6 +7,7 @@ export interface PageHeadProps {
   keywords?: string[];
   canonicalPath?: string;
   schemaJson?: object;
+  robots?: string;
 }
 
 export const PageHead: React.FC<PageHeadProps> = ({
@@ -15,6 +16,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
   keywords = ['AWS', 'SAA-C03', 'Solutions Architect', 'Cloud Architecture', 'AWS Certification'],
   canonicalPath = '',
   schemaJson,
+  robots = 'index, follow',
 }) => {
   useEffect(() => {
     // 1. Update Title
@@ -65,13 +67,13 @@ export const PageHead: React.FC<PageHeadProps> = ({
     updateOG('og:image:height', '630');
     updateOG('og:image:type', 'image/png');
 
-    let robots = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
-    if (!robots) {
-      robots = document.createElement('meta');
-      robots.name = 'robots';
-      document.head.appendChild(robots);
+    let robotsMeta = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
+    if (!robotsMeta) {
+      robotsMeta = document.createElement('meta');
+      robotsMeta.name = 'robots';
+      document.head.appendChild(robotsMeta);
     }
-    robots.content = 'index, follow';
+    robotsMeta.content = robots;
 
     const updateTwitter = (name: string, content: string) => {
       let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
@@ -125,7 +127,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
     } else {
       document.getElementById('schema-org-jsonld')?.remove();
     }
-  }, [title, description, keywords, canonicalPath, schemaJson]);
+  }, [title, description, keywords, canonicalPath, schemaJson, robots]);
 
   return null;
 };

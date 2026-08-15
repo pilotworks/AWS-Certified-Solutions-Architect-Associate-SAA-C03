@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation, Link } from 'react-router-dom';
 import { MODULES_METADATA } from '../data/modules-meta';
 import { ModuleMeta } from '../types';
 import { PageHead } from '../components/seo/page-head';
@@ -40,14 +40,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
     const next = new URLSearchParams(searchParams);
     next.set('mode', mode);
     setSearchParams(next);
-  };
-
-  const handleModuleClick = (moduleId: string) => {
-    if (onSelectModule) {
-      onSelectModule(moduleId);
-    } else {
-      navigate(`/modules/${moduleId}`);
-    }
   };
 
   const handleNavigate = (path: string) => {
@@ -280,9 +272,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             const isCompleted = completedModuleIds.includes(m.id);
 
             return (
-              <div
+              <Link
                 key={m.id}
-                onClick={() => handleModuleClick(m.id)}
+                to={`/modules/${m.id}`}
+                onClick={() => onSelectModule?.(m.id)}
                 className="rounded-2xl p-5 border flex flex-col justify-between cursor-pointer transition-all hover:-translate-y-0.5 shadow-sm group"
                 style={{
                   backgroundColor: 'var(--bg-card)',
@@ -346,7 +339,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     style={{ color: 'var(--text-accent)' }}
                   />
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

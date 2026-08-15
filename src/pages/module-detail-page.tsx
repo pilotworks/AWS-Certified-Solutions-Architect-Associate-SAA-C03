@@ -7,6 +7,7 @@ import { MarkdownRenderer } from '../components/markdown/markdown-renderer';
 import { QuizEngine } from '../components/quiz/quiz-engine';
 import { ModuleNotes } from '../components/ui/module-notes';
 import { PageHead } from '../components/seo/page-head';
+import { NotFoundPage } from './not-found-page';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import {
@@ -50,8 +51,11 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
   // Find module from props or URL param
   const currentModule =
     propModule ||
-    MODULES_METADATA.find((m) => m.id === id || m.slug === id) ||
-    MODULES_METADATA[0];
+    MODULES_METADATA.find((m) => m.id === id || m.slug === id);
+
+  if (!currentModule) {
+    return <NotFoundPage />;
+  }
 
   const activeTab = (searchParams.get('tab') as 'overview' | 'fast' | 'diagrams' | 'quiz' | 'notes') || 'overview';
   const fastTrackMode = (searchParams.get('mode') as 'fast' | 'ultra') || 'fast';

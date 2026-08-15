@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, Routes, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { IconExternalLink } from '@tabler/icons-react';
 import { MODULES_METADATA } from './data/modules-meta';
@@ -16,6 +16,7 @@ import { CheatSheetsPage } from './pages/cheat-sheets-page';
 import { useProgress } from './hooks/use-progress';
 import { OfflineStatus } from './components/pwa/offline-status';
 import { AUTHOR_NAME, AUTHOR_URL } from './components/seo/seo-config';
+import { NotFoundPage } from './pages/not-found-page';
 
 function ScrollToTop() {
   const { pathname, search } = useLocation();
@@ -134,7 +135,7 @@ export function AppContent() {
               <Route path="/cheatsheets" element={<CheatSheetsPage />} />
 
               {/* Fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </div>
 
