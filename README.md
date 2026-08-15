@@ -85,3 +85,7 @@ Technical blueprints for building the interactive web application:
 ## 📊 Exam Reviews
 
 All practice test reviews are stored in the **[exam-reviews/](exam-reviews/)** directory.
+
+## 📚 Content Attribution
+
+Some documentation in this repository has been adapted and edited from [AWS Certified Solutions Architect - Associate (SAA-C03)](https://github.com/ChathurangaVKD/AWS-Certified-Solutions-Architect-Associate-SAA-C03).
