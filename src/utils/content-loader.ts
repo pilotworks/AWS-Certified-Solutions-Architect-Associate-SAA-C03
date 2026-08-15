@@ -110,7 +110,7 @@ export function parsePracticeQuestions(
     const optionLines = body.match(/^[A-F]\.\s+[^\n]+/gm) || [];
     let options: QuizOption[] = optionLines.map((opt) => ({
       key: opt.charAt(0).toUpperCase(),
-      text: opt.substring(2).trim().replace(/^[-:.]\s*/, ''),
+      text: opt.substring(2).trim().replace(/^(?:-|:|\.)\s*/, ''),
     }));
 
     // If no line-start options found, fallback to inline matching
@@ -121,7 +121,7 @@ export function parsePracticeQuestions(
         if (/^[A-F]$/.test(key)) {
           options.push({
             key,
-            text: m.substring(2).trim().replace(/^[-:.]\s*/, ''),
+            text: m.substring(2).trim().replace(/^(?:-|:|\.)\s*/, ''),
           });
         }
       }

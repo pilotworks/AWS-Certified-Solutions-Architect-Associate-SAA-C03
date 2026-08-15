@@ -54,7 +54,32 @@ export const PageHead: React.FC<PageHeadProps> = ({
     updateOG('og:title', fullTitle);
     updateOG('og:description', description);
     updateOG('og:url', canonicalUrl);
-    updateOG('og:type', 'website');
+    updateOG('og:type', canonicalPath === '/' || canonicalPath === '' ? 'website' : 'article');
+    updateOG('og:site_name', 'AWS SAA-C03 Learning Hub');
+    updateOG('og:image', 'https://aws-saa-c03.pilotworks.dev/icons/icon-512.svg');
+
+    let robots = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.name = 'robots';
+      document.head.appendChild(robots);
+    }
+    robots.content = 'index, follow';
+
+    const updateTwitter = (name: string, content: string) => {
+      let tag = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement;
+      if (!tag) {
+        tag = document.createElement('meta');
+        tag.name = name;
+        document.head.appendChild(tag);
+      }
+      tag.content = content;
+    };
+
+    updateTwitter('twitter:card', 'summary_large_image');
+    updateTwitter('twitter:title', fullTitle);
+    updateTwitter('twitter:description', description);
+    updateTwitter('twitter:image', 'https://aws-saa-c03.pilotworks.dev/icons/icon-512.svg');
 
     // Canonical link tag
     let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
@@ -75,6 +100,8 @@ export const PageHead: React.FC<PageHeadProps> = ({
         document.head.appendChild(script);
       }
       script.textContent = JSON.stringify(schemaJson, null, 2);
+    } else {
+      document.getElementById('schema-org-jsonld')?.remove();
     }
   }, [title, description, keywords, canonicalPath, schemaJson]);
 

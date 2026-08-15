@@ -16,6 +16,7 @@ interface RouteConfig {
   title: string;
   description: string;
   keywords: string[];
+  schemaJson?: object;
 }
 
 const DOMAIN = process.env.SITE_URL || 'https://aws-saa-c03.pilotworks.dev';
@@ -41,24 +42,55 @@ export function runStaticGenerator() {
       title: 'AWS Certified Solutions Architect Associate (SAA-C03) Mastery Hub',
       description: 'Comprehensive AWS Solutions Architect Associate (SAA-C03) learning platform featuring 14 modules, interactive architecture diagrams, decision matrices, 3D flashcards, and exam simulators.',
       keywords: ['AWS', 'SAA-C03', 'Solutions Architect Associate', 'AWS Certification', 'Cloud Architecture'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: 'AWS Certified Solutions Architect - Associate (SAA-C03) Learning & Exam Hub',
+        description: 'Complete preparation course covering all 14 AWS SAA-C03 domains, architectural patterns, interactive 3D flashcards, and timed practice exam simulator.',
+        provider: { '@type': 'Organization', name: 'AWS SAA-C03 Learning Hub' },
+        educationalCredentialAwarded: 'AWS Certified Solutions Architect - Associate',
+        hasCourseInstance: { '@type': 'CourseInstance', courseMode: 'Online', courseWorkload: 'PT14H' },
+      },
+    },
+    {
+      path: '/modules',
+      title: 'AWS SAA-C03 Study Modules & Roadmap | AWS SAA-C03 Hub',
+      description: 'Browse all 14 AWS Certified Solutions Architect Associate (SAA-C03) study modules, exam domains, learning objectives, and practice resources.',
+      keywords: ['AWS SAA-C03 Modules', 'AWS Study Guide', 'Solutions Architect Roadmap'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'Course',
+        name: 'AWS SAA-C03 Study Modules and Roadmap',
+        description: 'Fourteen structured study modules for AWS Certified Solutions Architect Associate preparation.',
+        provider: { '@type': 'Organization', name: 'AWS SAA-C03 Learning Hub' },
+      },
     },
     {
       path: '/architecture',
       title: 'AWS Architecture Patterns & Blueprints | SAA-C03 Hub',
       description: 'Interactive AWS architecture diagrams covering Multi-AZ web applications, serverless event-driven processing, data lakes, and cross-region disaster recovery.',
       keywords: ['AWS Architecture', 'Mermaid Diagrams', 'Multi-AZ', 'Serverless', 'Well-Architected'],
-    },
-    {
-      path: '/cheat-sheets',
-      title: 'AWS Architecture Decision Matrices & Cheat Sheets | SAA-C03 Hub',
-      description: 'High-yield AWS decision matrices comparing Compute (EC2 vs Lambda vs Fargate), Storage (S3 vs EBS vs EFS), and Databases (RDS vs DynamoDB vs Aurora).',
-      keywords: ['AWS Cheat Sheet', 'Decision Matrix', 'Storage Comparison', 'Database Comparison'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        headline: 'AWS SAA-C03 Architectural Patterns & Mermaid Diagrams',
+        description: 'High-availability, disaster recovery, serverless, and decoupled reference architectures with interactive Mermaid vector diagrams.',
+        articleSection: 'AWS Architecture',
+        keywords: 'AWS Architecture, HA/DR, Serverless, Decoupled, SAA-C03, Mermaid diagrams',
+      },
     },
     {
       path: '/cheatsheets',
       title: 'AWS Architecture Decision Matrices & Cheat Sheets | SAA-C03 Hub',
       description: 'High-yield AWS decision matrices comparing Compute, Storage, and Database services.',
       keywords: ['AWS Cheat Sheet', 'Decision Matrix'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        headline: 'AWS Architecture Decision Matrices & Cheat Sheets',
+        description: 'High-yield AWS decision matrices comparing Compute, Storage, and Database services.',
+        articleSection: 'AWS Architecture',
+      },
     },
     {
       path: '/flashcards',
@@ -71,6 +103,13 @@ export function runStaticGenerator() {
       title: 'Full SAA-C03 Practice Exam Simulator | SAA-C03 Hub',
       description: 'Timed 65-question practice exam simulator adhering to official AWS SAA-C03 domain weightings, scoring criteria, and in-depth explanations.',
       keywords: ['AWS Exam Simulator', 'Practice Exam', '65 Questions', 'Timed Quiz'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'Quiz',
+        name: 'AWS SAA-C03 Full Practice Exam Simulator',
+        description: 'Timed 65-question practice exam for AWS Solutions Architect Associate preparation.',
+        educationalLevel: 'Intermediate',
+      },
     },
   ];
 
@@ -81,6 +120,14 @@ export function runStaticGenerator() {
       title: `Module ${mod.number < 10 ? '0' : ''}${mod.number}: ${mod.title} | AWS SAA-C03 Hub`,
       description: `Complete study guide for ${mod.title} (${mod.domain}) covering comprehensive theory, fast-track notes, vector diagrams, and ${mod.examWeight} exam questions.`,
       keywords: ['AWS', mod.title, mod.domain, 'SAA-C03', 'Study Guide'],
+      schemaJson: {
+        '@context': 'https://schema.org',
+        '@type': 'TechArticle',
+        headline: `Module ${mod.number < 10 ? '0' : ''}${mod.number}: ${mod.title}`,
+        description: `Complete AWS SAA-C03 guide for ${mod.title} covering architecture theory, fast-track summaries, vector diagrams, and practice questions.`,
+        articleSection: mod.domain,
+        keywords: `AWS, ${mod.title}, ${mod.domain}, SAA-C03, Solutions Architect`,
+      },
     });
   });
 
@@ -111,15 +158,27 @@ export function runStaticGenerator() {
     const canonicalUrl = `${DOMAIN}${route.path === '/' ? '' : route.path}`;
     const extraMeta = `
   <link rel="canonical" href="${canonicalUrl}" />
+  <meta name="robots" content="index, follow" />
   <meta property="og:title" content="${route.title}" />
   <meta property="og:description" content="${route.description}" />
   <meta property="og:url" content="${canonicalUrl}" />
-  <meta property="og:type" content="article" />
+  <meta property="og:type" content="${route.path === '/' ? 'website' : 'article'}" />
+  <meta property="og:site_name" content="AWS SAA-C03 Learning Hub" />
+  <meta property="og:image" content="${DOMAIN}/icons/icon-512.svg" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${route.title}" />
-  <meta name="twitter:description" content="${route.description}" />`;
+  <meta name="twitter:description" content="${route.description}" />
+  <meta name="twitter:image" content="${DOMAIN}/icons/icon-512.svg" />`;
 
     customHtml = customHtml.replace('</head>', `${extraMeta}\n</head>`);
+
+    if (route.schemaJson) {
+      const jsonLd = JSON.stringify(route.schemaJson).replace(/</g, '\\u003c');
+      customHtml = customHtml.replace(
+        '</head>',
+        `  <script id="schema-org-jsonld" type="application/ld+json">${jsonLd}</script>\n</head>`
+      );
+    }
 
     // Render full React component tree for real SSR / SSG HTML
     try {

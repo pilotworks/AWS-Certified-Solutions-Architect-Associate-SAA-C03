@@ -1,7 +1,7 @@
-import mermaid from 'mermaid';
 import { ThemeMode } from '../context/theme-context';
 
 export async function renderMermaidSvg(chart: string, theme: ThemeMode): Promise<string> {
+  const { default: mermaid } = await import('mermaid');
   const isDark = theme === 'dark';
   const isReader = theme === 'reader';
 

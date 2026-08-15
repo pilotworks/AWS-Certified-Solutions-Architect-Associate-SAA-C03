@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { MODULES_METADATA } from '../data/modules-meta';
 import { ModuleMeta } from '../types';
 import { PageHead } from '../components/seo/page-head';
@@ -32,6 +32,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const activeStudyMode = searchParams.get('mode') || 'fasttrack';
 
@@ -80,10 +81,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8 space-y-8">
       <PageHead
-        title="Dashboard & SAA-C03 Roadmaps"
-        description="Comprehensive study roadmaps, 14 domain modules, flashcards, vector diagrams, and mock exam simulator for AWS SAA-C03."
+        title={location.pathname === '/modules' ? 'AWS SAA-C03 Study Modules & Roadmap' : 'Dashboard & SAA-C03 Roadmaps'}
+        description={location.pathname === '/modules'
+          ? 'Browse all 14 AWS Certified Solutions Architect Associate (SAA-C03) study modules, exam domains, learning objectives, and practice resources.'
+          : 'Comprehensive study roadmaps, 14 domain modules, flashcards, vector diagrams, and mock exam simulator for AWS SAA-C03.'}
         keywords={['AWS SAA-C03', 'AWS Solutions Architect', 'AWS Exam Prep', 'Cloud Architecture', 'AWS Cheat Sheets']}
-        canonicalPath="/"
+        canonicalPath={location.pathname === '/modules' ? '/modules' : '/'}
         schemaJson={courseSchemaJson}
       />
 
