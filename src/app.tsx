@@ -169,9 +169,14 @@ export function AppContent() {
 }
 
 export function ServerApp({ initialUrl = '/' }: { initialUrl?: string }) {
+  const basePath = process.env.VITE_BASE_PATH?.replace(/\/$/, '') || '';
+
   return (
     <ThemeProvider>
-      <MemoryRouter initialEntries={[initialUrl]}>
+      <MemoryRouter
+        basename={basePath || undefined}
+        initialEntries={[`${basePath}${initialUrl}`]}
+      >
         <AppContent />
       </MemoryRouter>
     </ThemeProvider>
@@ -181,7 +186,7 @@ export function ServerApp({ initialUrl = '/' }: { initialUrl?: string }) {
 export function App() {
   return (
     <ThemeProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
         <AppContent />
       </BrowserRouter>
     </ThemeProvider>
