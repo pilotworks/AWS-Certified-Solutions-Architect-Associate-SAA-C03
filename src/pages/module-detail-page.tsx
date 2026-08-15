@@ -221,7 +221,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
             borderColor: 'var(--border-subtle)',
           }}
         >
-          <MarkdownRenderer content={readmeContent || '# Content loading...'} />
+          <MarkdownRenderer content={readmeContent || '# Content loading...'} demoteH1 />
         </div>
       )}
 
@@ -272,6 +272,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
                   ? fastLearnContent || '# Fast Learn content coming soon'
                   : ultraFastContent || '# Ultra Fast content coming soon'
               }
+              demoteH1
             />
           </div>
         </div>
@@ -286,7 +287,7 @@ export const ModuleDetailPage: React.FC<ModuleDetailPageProps> = ({
             borderColor: 'var(--border-subtle)',
           }}
         >
-          <MarkdownRenderer content={diagramsContent || '# No diagrams found for this module.'} />
+            <MarkdownRenderer content={diagramsContent || '# No diagrams found for this module.'} demoteH1 />
         </div>
       )}
 

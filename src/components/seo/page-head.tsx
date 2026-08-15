@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { AUTHOR_NAME, AUTHOR_URL, SITE_URL, getCanonicalUrl, getOgImageUrl } from './seo-config';
 
 export interface PageHeadProps {
   title: string;
@@ -49,14 +50,20 @@ export const PageHead: React.FC<PageHeadProps> = ({
       og.content = content;
     };
 
-    const canonicalUrl = `https://aws-saa-c03.pilotworks.dev${canonicalPath || ''}`;
+    const siteUrl = import.meta.env.VITE_SITE_URL || SITE_URL;
+    const canonicalUrl = getCanonicalUrl(canonicalPath, siteUrl);
+    const ogImageUrl = getOgImageUrl(siteUrl);
 
     updateOG('og:title', fullTitle);
     updateOG('og:description', description);
     updateOG('og:url', canonicalUrl);
     updateOG('og:type', canonicalPath === '/' || canonicalPath === '' ? 'website' : 'article');
     updateOG('og:site_name', 'AWS SAA-C03 Learning Hub');
-    updateOG('og:image', 'https://aws-saa-c03.pilotworks.dev/icons/icon-512.svg');
+    updateOG('og:image', ogImageUrl);
+    updateOG('og:image:alt', 'AWS SAA-C03 Learning Hub');
+    updateOG('og:image:width', '1200');
+    updateOG('og:image:height', '630');
+    updateOG('og:image:type', 'image/png');
 
     let robots = document.querySelector('meta[name="robots"]') as HTMLMetaElement;
     if (!robots) {
@@ -79,7 +86,7 @@ export const PageHead: React.FC<PageHeadProps> = ({
     updateTwitter('twitter:card', 'summary_large_image');
     updateTwitter('twitter:title', fullTitle);
     updateTwitter('twitter:description', description);
-    updateTwitter('twitter:image', 'https://aws-saa-c03.pilotworks.dev/icons/icon-512.svg');
+    updateTwitter('twitter:image', ogImageUrl);
 
     // Canonical link tag
     let linkCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement;
@@ -99,7 +106,22 @@ export const PageHead: React.FC<PageHeadProps> = ({
         script.type = 'application/ld+json';
         document.head.appendChild(script);
       }
-      script.textContent = JSON.stringify(schemaJson, null, 2);
+      const schema = schemaJson as Record<string, unknown>;
+      script.textContent = JSON.stringify(
+        {
+          ...schemaJson,
+          author: schema['@type'] === 'TechArticle'
+            ? { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL }
+            : undefined,
+          creator: { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL },
+          inLanguage: 'en',
+          image: ogImageUrl,
+          url: canonicalUrl,
+          mainEntityOfPage: canonicalUrl,
+        },
+        null,
+        2,
+      );
     } else {
       document.getElementById('schema-org-jsonld')?.remove();
     }

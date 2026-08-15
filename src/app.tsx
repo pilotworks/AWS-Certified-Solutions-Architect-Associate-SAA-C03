@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, MemoryRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { IconExternalLink } from '@tabler/icons-react';
 import { MODULES_METADATA } from './data/modules-meta';
 import { ThemeProvider } from './context/theme-context';
@@ -14,6 +15,17 @@ import { FlashcardsPage } from './pages/flashcards-page';
 import { CheatSheetsPage } from './pages/cheat-sheets-page';
 import { useProgress } from './hooks/use-progress';
 import { OfflineStatus } from './components/pwa/offline-status';
+import { AUTHOR_NAME, AUTHOR_URL } from './components/seo/seo-config';
+
+function ScrollToTop() {
+  const { pathname, search } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname, search]);
+
+  return null;
+}
 
 export function AppContent() {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
@@ -42,6 +54,7 @@ export function AppContent() {
       }}
     >
       <OfflineStatus />
+      <ScrollToTop />
       {/* Global Header */}
       <Header
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
@@ -150,6 +163,18 @@ export function AppContent() {
                   >
                     <span>ChathurangaVKD / AWS-SAA-C03</span>
                     <IconExternalLink className="w-3 h-3 opacity-70" />
+                  </a>
+                </div>
+                <div className="mt-1 text-[11px]">
+                  <span>Author: </span>
+                  <a
+                    href={AUTHOR_URL}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="underline underline-offset-2 hover:opacity-80 transition-opacity font-medium"
+                    style={{ color: 'var(--text-accent)' }}
+                  >
+                    {AUTHOR_NAME}
                   </a>
                 </div>
               </div>

@@ -146,3 +146,47 @@
     transform: rotateY(180deg);
   }
 }
+
+/* Keep dynamic Highlight.js token classes outside Tailwind's purgeable layers. */
+.hljs {
+  color: var(--text-primary);
+  background: transparent;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-type {
+  color: #f59e0b;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-attr {
+  color: #34d399;
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+  color: #38bdf8;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-built_in {
+  color: #c084fc;
+}
+
+.hljs-meta,
+.hljs-variable,
+.hljs-template-variable {
+  color: #fb7185;
+}

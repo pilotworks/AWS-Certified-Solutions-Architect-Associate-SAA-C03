@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#090A0F"/>
+  <rect x="70" y="70" width="1060" height="490" rx="30" fill="#12141F" stroke="#F59E0B" stroke-width="3"/>
+  <rect x="110" y="130" width="16" height="360" fill="#F59E0B"/>
+  <text x="170" y="220" fill="#F59E0B" font-family="Verdana" font-size="34" font-weight="700" letter-spacing="4">AWS CERTIFICATION</text>
+  <text x="170" y="320" fill="#F8FAFC" font-family="Verdana" font-size="68" font-weight="700">SAA-C03</text>
+  <text x="170" y="390" fill="#CBD5E1" font-family="Verdana" font-size="38">Solutions Architect Learning Hub</text>
+  <text x="170" y="475" fill="#64748B" font-family="Verdana" font-size="24">14 modules - Architecture patterns - Practice exams</text>
+</svg>

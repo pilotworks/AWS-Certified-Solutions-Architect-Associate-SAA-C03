@@ -1,5 +1,15 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import hljs from "highlight.js/lib/core";
+import bash from "highlight.js/lib/languages/bash";
+import javascript from "highlight.js/lib/languages/javascript";
+import json from "highlight.js/lib/languages/json";
+import markdown from "highlight.js/lib/languages/markdown";
+import python from "highlight.js/lib/languages/python";
+import sql from "highlight.js/lib/languages/sql";
+import typescript from "highlight.js/lib/languages/typescript";
+import xml from "highlight.js/lib/languages/xml";
+import yaml from "highlight.js/lib/languages/yaml";
 import { MermaidViewer } from "../architecture/mermaid-viewer";
 import {
   IconCopy,
@@ -14,14 +24,26 @@ import {
   IconExternalLink,
 } from "@tabler/icons-react";
 
+hljs.registerLanguage("bash", bash);
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("json", json);
+hljs.registerLanguage("markdown", markdown);
+hljs.registerLanguage("python", python);
+hljs.registerLanguage("sql", sql);
+hljs.registerLanguage("typescript", typescript);
+hljs.registerLanguage("xml", xml);
+hljs.registerLanguage("yaml", yaml);
+
 interface MarkdownRendererProps {
   content: string;
   className?: string;
+  demoteH1?: boolean;
 }
 
 export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
   className = "",
+  demoteH1 = false,
 }) => {
   if (!content || !content.trim()) {
     return (
@@ -34,7 +56,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
     );
   }
 
-  const blocks = parseMarkdown(content);
+  const blocks = parseMarkdown(content, demoteH1);
 
   return (
     <div
@@ -50,7 +72,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
 // BLOCK PARSER
 // ==========================================
 
-function parseMarkdown(md: string): React.ReactNode[] {
+function parseMarkdown(md: string, demoteH1 = false): React.ReactNode[] {
   const nodes: React.ReactNode[] = [];
   const lines = md.replace(/\r\n/g, "\n").split("\n");
   let i = 0;
@@ -151,7 +173,7 @@ function parseMarkdown(md: string): React.ReactNode[] {
     // 5. Headings: # H1 ... ###### H6
     const headingMatch = line.match(/^(#{1,6})\s+(.*)$/);
     if (headingMatch) {
-      const level = headingMatch[1].length;
+      const level = demoteH1 && headingMatch[1].length === 1 ? 2 : headingMatch[1].length;
       const text = headingMatch[2].trim();
       nodes.push(
         <HeadingBlock key={`heading-${i}`} level={level} text={text} />,
@@ -474,6 +496,8 @@ export function parseInline(text: string): React.ReactNode {
           key={key}
           src={src}
           alt={alt}
+          loading="lazy"
+          decoding="async"
           className="rounded-lg max-w-full my-3 border shadow-sm"
           style={{ borderColor: "var(--border-subtle)" }}
         />,
@@ -534,6 +558,21 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({
   language,
 }) => {
   const [copied, setCopied] = useState(false);
+  const normalizedLanguage = normalizeCodeLanguage(language);
+  const highlightedCode = useMemo(() => {
+    if (!normalizedLanguage || normalizedLanguage === "text") {
+      return escapeHtml(code);
+    }
+
+    try {
+      return hljs.highlight(code, {
+        language: normalizedLanguage,
+        ignoreIllegals: true,
+      }).value;
+    } catch {
+      return escapeHtml(code);
+    }
+  }, [code, normalizedLanguage]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(code);
@@ -558,10 +597,12 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({
         }}
       >
         <span className="uppercase tracking-wider font-semibold">
-          {language || "text"}
+          {normalizedLanguage}
         </span>
         <button
           onClick={handleCopy}
+          type="button"
+          aria-label={`Copy ${normalizedLanguage} code`}
           className="flex items-center gap-1.5 hover:opacity-100 opacity-70 transition-opacity cursor-pointer font-sans text-xs font-medium"
           style={{ color: "var(--text-primary)" }}
         >
@@ -574,14 +615,54 @@ const CodeBlock: React.FC<{ code: string; language?: string }> = ({
         </button>
       </div>
       <pre
-        className="p-4 text-xs md:text-sm font-mono overflow-x-auto leading-relaxed"
+        className="hljs p-4 text-xs md:text-sm font-mono overflow-x-auto leading-relaxed"
         style={{ color: "var(--text-primary)" }}
       >
-        <code>{code}</code>
+        <code className={`language-${normalizedLanguage}`} dangerouslySetInnerHTML={{ __html: highlightedCode }} />
       </pre>
     </div>
   );
 };
+
+function normalizeCodeLanguage(language?: string): string {
+  const normalized = language?.toLowerCase().trim() || "text";
+  const aliases: Record<string, string> = {
+    bash: "bash",
+    shell: "bash",
+    sh: "bash",
+    js: "javascript",
+    jsx: "javascript",
+    javascript: "javascript",
+    ts: "typescript",
+    tsx: "typescript",
+    typescript: "typescript",
+    json: "json",
+    jsonc: "json",
+    md: "markdown",
+    markdown: "markdown",
+    py: "python",
+    python: "python",
+    sql: "sql",
+    html: "xml",
+    svg: "xml",
+    xml: "xml",
+    yml: "yaml",
+    yaml: "yaml",
+    text: "text",
+    plaintext: "text",
+  };
+
+  return aliases[normalized] || (hljs.getLanguage(normalized) ? normalized : "text");
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 const HeadingBlock: React.FC<{ level: number; text: string }> = ({
   level,

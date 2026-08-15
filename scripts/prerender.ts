@@ -5,6 +5,7 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { MODULES_METADATA } from '../src/data/modules-meta';
 import { ServerApp } from '../src/app';
+import { AUTHOR_NAME, AUTHOR_URL, getOgImageUrl } from '../src/components/seo/seo-config';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,6 +21,31 @@ interface RouteConfig {
 }
 
 const DOMAIN = process.env.SITE_URL || 'https://aws-saa-c03.pilotworks.dev';
+
+function escapeHtmlAttribute(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function enrichSchema(schemaJson: object | undefined, canonicalUrl: string): object | undefined {
+  if (!schemaJson) return undefined;
+
+  const schema = schemaJson as Record<string, unknown>;
+  return {
+    ...schema,
+    ...(schema['@type'] === 'TechArticle'
+      ? { author: { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL } }
+      : {}),
+    creator: { '@type': 'Person', name: AUTHOR_NAME, url: AUTHOR_URL },
+    inLanguage: 'en',
+    image: getOgImageUrl(DOMAIN),
+    url: canonicalUrl,
+    mainEntityOfPage: canonicalUrl,
+  };
+}
 
 export function runStaticGenerator() {
   if (!fs.existsSync(distDir)) {
@@ -139,41 +165,47 @@ export function runStaticGenerator() {
     let customHtml = baseHtml;
 
     // Inject title
-    customHtml = customHtml.replace(/<title>.*?<\/title>/i, `<title>${route.title}</title>`);
+      customHtml = customHtml.replace(/<title>.*?<\/title>/i, `<title>${escapeHtmlAttribute(route.title)}</title>`);
 
     // Inject or update meta description
     if (customHtml.includes('name="description"')) {
       customHtml = customHtml.replace(
         /<meta\s+name="description"\s+content=".*?"\s*\/?>/i,
-        `<meta name="description" content="${route.description}" />`
+        `<meta name="description" content="${escapeHtmlAttribute(route.description)}" />`
       );
     } else {
       customHtml = customHtml.replace(
         '</head>',
-        `  <meta name="description" content="${route.description}" />\n</head>`
+        `  <meta name="description" content="${escapeHtmlAttribute(route.description)}" />\n</head>`
       );
     }
 
     // Inject Canonical & OpenGraph
     const canonicalUrl = `${DOMAIN}${route.path === '/' ? '' : route.path}`;
+    const safeTitle = escapeHtmlAttribute(route.title);
+    const safeDescription = escapeHtmlAttribute(route.description);
     const extraMeta = `
   <link rel="canonical" href="${canonicalUrl}" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="${route.title}" />
-  <meta property="og:description" content="${route.description}" />
+  <meta property="og:title" content="${safeTitle}" />
+  <meta property="og:description" content="${safeDescription}" />
   <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:type" content="${route.path === '/' ? 'website' : 'article'}" />
   <meta property="og:site_name" content="AWS SAA-C03 Learning Hub" />
-  <meta property="og:image" content="${DOMAIN}/icons/icon-512.svg" />
+  <meta property="og:image" content="${getOgImageUrl(DOMAIN)}" />
+  <meta property="og:image:alt" content="AWS SAA-C03 Learning Hub" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${route.title}" />
-  <meta name="twitter:description" content="${route.description}" />
-  <meta name="twitter:image" content="${DOMAIN}/icons/icon-512.svg" />`;
+  <meta name="twitter:title" content="${safeTitle}" />
+  <meta name="twitter:description" content="${safeDescription}" />
+  <meta name="twitter:image" content="${getOgImageUrl(DOMAIN)}" />`;
 
     customHtml = customHtml.replace('</head>', `${extraMeta}\n</head>`);
 
     if (route.schemaJson) {
-      const jsonLd = JSON.stringify(route.schemaJson).replace(/</g, '\\u003c');
+      const jsonLd = JSON.stringify(enrichSchema(route.schemaJson, canonicalUrl)).replace(/</g, '\\u003c');
       customHtml = customHtml.replace(
         '</head>',
         `  <script id="schema-org-jsonld" type="application/ld+json">${jsonLd}</script>\n</head>`

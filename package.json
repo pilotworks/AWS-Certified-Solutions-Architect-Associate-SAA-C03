@@ -15,6 +15,7 @@
     "@tabler/icons-react": "^3.46.0",
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "highlight.js": "^11.12.0",
     "mermaid": "^11.4.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
