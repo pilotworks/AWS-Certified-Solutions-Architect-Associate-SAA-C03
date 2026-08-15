@@ -1,4 +1,27 @@
-# Documentation Overview
+# AWS SAA-C03 Learning Hub
+
+Interactive preparation platform for the AWS Certified Solutions Architect - Associate (SAA-C03) exam.
+
+The hub includes 14 study modules, architecture diagrams, decision matrices, spaced-repetition flashcards, practice questions, a timed exam simulator, and offline progress tracking.
+
+Website: https://aws-saa-c03.pilotworks.dev
+
+![AWS SAA-C03 Learning Hub dashboard](public/screenshots/dashboard.png)
+
+## Quick Start
+
+```bash
+bun install
+bun run dev
+```
+
+Build the static site with:
+
+```bash
+bun run build
+```
+
+## Documentation Overview
 
 This directory contains all documentation organized by purpose.
 
