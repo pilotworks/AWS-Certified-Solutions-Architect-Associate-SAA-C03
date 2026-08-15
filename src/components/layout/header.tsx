@@ -87,7 +87,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <span className="flex items-center gap-2">
               <IconSearch className="w-4 h-4" style={{ color: 'var(--text-accent)' }} />
-              <span>IconSearch services, cheatsheets, questions...</span>
+              <span>Search services, cheatsheets, questions...</span>
             </span>
             <kbd
               className="px-2 py-0.5 rounded font-mono text-[10px] border"

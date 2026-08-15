@@ -254,7 +254,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             variant="ghost"
             size="sm"
             onClick={handleCopyCode}
-            title="IconCopy Diagram Code"
+            title="Copy Diagram Code"
             className="p-1.5 border hover:bg-[var(--bg-card-hover)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
@@ -264,7 +264,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             variant="ghost"
             size="sm"
             onClick={handleDownloadSVG}
-            title="IconDownload Vector SVG"
+            title="Download Vector SVG"
             className="px-2.5 py-1 text-xs border hover:bg-[var(--bg-card-hover)] text-[var(--text-primary)] font-medium flex items-center gap-1.5 shadow-xs transition-colors"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
@@ -275,7 +275,7 @@ export const MermaidViewer: React.FC<MermaidViewerProps> = ({ chart, title }) =>
             variant="ghost"
             size="sm"
             onClick={handleDownloadPNG}
-            title="IconDownload High-Res PNG"
+            title="Download High-Res PNG"
             className="px-2.5 py-1 text-xs border font-semibold flex items-center gap-1.5 shadow-xs transition-colors"
             style={{
               color: 'var(--text-accent)',

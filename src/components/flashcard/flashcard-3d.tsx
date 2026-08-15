@@ -26,19 +26,19 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
     <div className="w-full max-w-xl mx-auto perspective-1000 my-4 select-none">
       <div
         onClick={handleFlip}
-        className={`relative w-full min-h-[300px] md:min-h-[340px] transform-style-3d transition-transform duration-500 cursor-pointer rounded-2xl ${
+        className={`relative w-full h-[min(420px,calc(100dvh-10rem))] min-h-[300px] md:h-[380px] md:min-h-[340px] transform-style-3d transition-transform duration-500 cursor-pointer rounded-2xl ${
           isFlipped ? 'rotate-y-180' : ''
         }`}
       >
         {/* FRONT SIDE */}
         <div
-          className="absolute inset-0 backface-hidden rounded-2xl p-6 md:p-8 flex flex-col justify-between border shadow-lg transition-colors"
+          className="absolute inset-0 backface-hidden rounded-2xl p-6 md:p-8 flex flex-col border shadow-lg transition-colors overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-card)',
             borderColor: 'var(--border-subtle)',
           }}
         >
-          <div>
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
             <div className="flex items-center justify-between gap-2 mb-4">
               <Badge variant="orange" size="md">
                 {card.category}
@@ -58,7 +58,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
             </h3>
 
             <p
-              className="text-sm md:text-base leading-relaxed"
+              className="text-sm md:text-base leading-relaxed break-words"
               style={{ color: 'var(--text-secondary)' }}
             >
               {card.front}
@@ -66,7 +66,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
           </div>
 
           <div
-            className="flex items-center justify-between pt-4 border-t text-xs font-medium"
+            className="shrink-0 flex items-center justify-between pt-4 border-t text-xs font-medium"
             style={{ borderColor: 'var(--border-subtle)', color: 'var(--text-muted)' }}
           >
             <span className="flex items-center gap-1" style={{ color: 'var(--text-accent)' }}>
@@ -78,16 +78,16 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
 
         {/* BACK SIDE */}
         <div
-          className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl p-6 md:p-8 flex flex-col justify-between border shadow-lg transition-colors"
+          className="absolute inset-0 backface-hidden rotate-y-180 rounded-2xl p-6 md:p-8 flex flex-col border shadow-lg transition-colors overflow-hidden"
           style={{
             backgroundColor: 'var(--bg-card)',
             borderColor: 'var(--accent-border)',
           }}
         >
-          <div>
+          <div className="flex-1 min-h-0 overflow-y-auto pr-1">
             <div className="flex items-center justify-between gap-2 mb-3">
               <Badge variant="cyan" size="md">
-                Solution & IconKey Facts
+                Solution & Key Facts
               </Badge>
               <span className="text-xs font-mono font-bold" style={{ color: 'var(--text-accent)' }}>
                 ANSWER
@@ -95,7 +95,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
             </div>
 
             <div
-              className="text-sm md:text-base leading-relaxed mb-4 whitespace-pre-line font-medium"
+              className="text-sm md:text-base leading-relaxed mb-4 whitespace-pre-line break-words font-medium"
               style={{ color: 'var(--text-primary)' }}
             >
               {card.back}
@@ -121,7 +121,7 @@ export const Flashcard3D: React.FC<Flashcard3DProps> = ({
           {/* Action buttons on card back */}
           <div
             onClick={(e) => e.stopPropagation()}
-            className="flex items-center justify-between gap-3 pt-3 border-t"
+            className="shrink-0 flex items-center justify-between gap-3 pt-3 border-t"
             style={{ borderColor: 'var(--border-subtle)' }}
           >
             <button

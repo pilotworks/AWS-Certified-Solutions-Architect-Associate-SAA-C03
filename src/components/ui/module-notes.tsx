@@ -38,7 +38,7 @@ export const ModuleNotes: React.FC<ModuleNotesProps> = ({
   };
 
   const handleInsertTemplate = () => {
-    const template = `### 📝 IconKey Memorization Points for ${moduleTitle}
+    const template = `### 📝 Key Memorization Points for ${moduleTitle}
 - **Crucial Exam Rule**: 
 - **Cost Factor**: 
 - **Gotchas / Anti-patterns**: 

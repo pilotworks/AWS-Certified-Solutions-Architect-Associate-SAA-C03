@@ -93,11 +93,11 @@ export const FlashcardDeck: React.FC<FlashcardDeckProps> = ({
         </div>
 
         <div className="flex items-center gap-3">
-          <Badge variant="emerald">
+          <Badge variant="emerald" className="whitespace-nowrap shrink-0">
             <IconCircleCheck className="w-3.5 h-3.5" /> Mastered: {masteredIds.length}
           </Badge>
-          <Button variant="ghost" size="sm" onClick={handleShuffle} title="IconArrowsShuffle Deck">
-            <IconArrowsShuffle className="w-4 h-4" /> IconArrowsShuffle
+          <Button variant="ghost" size="sm" onClick={handleShuffle} title="Shuffle Deck">
+            <IconArrowsShuffle className="w-4 h-4" /> Shuffle
           </Button>
         </div>
       </div>

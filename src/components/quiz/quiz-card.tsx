@@ -130,7 +130,7 @@ export const QuizCard: React.FC<QuizCardProps> = ({
       {question.examKeywords.length > 0 && (
         <div className="flex items-center gap-1.5 flex-wrap mb-5">
           <span className="text-xs flex items-center gap-1" style={{ color: 'var(--text-muted)' }}>
-            <IconKey className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> IconKey Clues:
+            <IconKey className="w-3.5 h-3.5" style={{ color: 'var(--text-accent)' }} /> Key Clues:
           </span>
           {question.examKeywords.map((kw, idx) => (
             <span

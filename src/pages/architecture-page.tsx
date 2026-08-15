@@ -340,7 +340,7 @@ export const ArchitecturePage: React.FC = () => {
                 <MermaidViewer chart={pattern.diagramMermaid} title={pattern.title} />
               </div>
 
-              {/* IconKey Takeaways */}
+              {/* Key Takeaways */}
               <div
                 className="rounded-xl p-4 border space-y-2"
                 style={{
